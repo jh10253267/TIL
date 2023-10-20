@@ -1,4 +1,4 @@
 # JDBC
-JDBC는 Java DataBase Connectivity의 약자이다.
+ JDBC는 Java DataBase Connectivity의 약자이다.
 자바애플리케이션에서 db프로그래밍을 할 수 있도록 도와주는 표준 인터페이스이다. 인터페이스란 말은 구현체가 필요하다는 말인데 구현체는 각 데이터베이스 벤더사가 제공해주고 있다.
-jdbc를 프로젝트에서 사용하는 방법은 여러가지인데
+jdbc를 프로젝트에서 사용하는 방법은 여러가지인데 
