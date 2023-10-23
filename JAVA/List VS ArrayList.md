@@ -13,7 +13,8 @@ ArrayList로 선언할 경우
 ArrayList<String> list = new ArrayList<>();
 list = new LinkedList<>(); // error
 ```
-이런 식으로 변경하지 못한다. 반면에
+이런 식으로 변경하지 못한다. 반면에<br>
+List로 선언한 경우
 ```java
 List<String> list = new ArrayList<>();
 list = new LinkedList<>();
