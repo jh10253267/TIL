@@ -7,8 +7,7 @@
 이 규약이 HTTP이다.
 
 ## HTTP란?
-Hyper Text Transfer Protocol의 약자로 팀 버너스리와 그가 속해있는 팀이 ㅗ씌Qnsaks dkslfk 
-HTTP또한 발명했다. https://www.naver.com/ 와 같이 표현된다. 참고로 https는 기존의 http에서 보안을 강화한 버전이다.
+Hyper Text Transfer Protocol의 약자로 팀 버너스리와 그가 속해있는 팀이 HTTP또한 발명했다. https://www.naver.com/ 와 같이 표현된다. 참고로 https는 기존의 http에서 보안을 강화한 버전이다.
 
 여담) HTTP를 발명한 팀 버너스리가 후회하고 있는게 하나 있는데  인터넷 주소 맨 앞에 붙는 ‘http://’라는 문구에서 사실 ‘//’, 빗금 두 개가 아무 쓸모도 없는 부분였다고 한다. 실제로 인터넷 주소를 입력할 때 해당 부분을 빼고 넣어도 아무런 지장이 없다. 그래서 팀 버너스리는 모두를 번거롭게 했다며 자책했다고 한다. 그 당시에는 그게 멋있어보였다고.....
 
