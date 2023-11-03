@@ -1,4 +1,4 @@
-# Rest API
+# REST API
  클라이언트의 종류가 웹 브라우저, 안드로이드 앱, ios등 다양해지면서 클라이언트들에게 정보를 제공하는 방식을 일원화시키고 싶어졌다. 그 대표적인 방법이 HTTP프로토콜로 API를 제공하는 것이다. 이를 REST API라고 한다.
 
 ## API란?
@@ -62,7 +62,7 @@
 
  REST에 대해 더 깊이 이해해보자 REST가 무엇을 위한 것인지부터 생각해봐야한다. 어떤 맥락에서 나온 개념이고 어떤 의도였는지 살펴보려한다.<br>
  우선, 웹의 역사를 한 번 따라가보자.
- 팀 버너스리의 WEB(1991)은 어떻게 인터넷에서 정보를 공유할 것인가에 대한 해답이였다. 팀 버너스리는 정보들을 하이퍼텍스트로 연결해서 정보를 공유하는 방식을 제안했고 표현 형식으로 HTML로 정보들의 식별자로 URL, 그리고 전송 방법으로 HTTP을 고안했다.
+ 팀 버너스리의 WEB(1991)은 어떻게 인터넷에서 정보를 공유할 것인가에 대한 해답이였다. 팀 버너스리는 정보들을 하이퍼텍스트로 연결해서 정보를 공유하는 방식을 제안했고 표현 형식으로 HTML, 정보들의 식별자로 URL, 그리고 전송 방법으로 HTTP을 고안했다.
 
  로이 필딩은 1994년~1996년 HTTP/1.0의 개발에 참여하고 있었고 웹은 급속도로 성장하고 있던 시점이었다. 그러던 중 고민이 생겼다. 로이 필딩이 HTTP에 기능을 더하고 수정한다면 이미 전 세계적으로 쓰이고 있는 HTTP와 기존의 웹 페이지들과의 호환성 문제를 피하기 어렵다고 느꼈다. 그래서 로이 필딩이 한 고민은 "How do I improve HTTP without breaking the Web?"
  그가 내놓은 해답은 HTTP Object Model. 이게 4년 후 REST라는 이름으로 세상에 알려지게 된다.
@@ -100,8 +100,8 @@
 ```
 An API that provides network-based access to resources via a uniform interface of self-descriptive messages containing hypertext to indicate potention state transitions might be part of an overall system tha is a RESTful Applicaiton - Roy T.Fielding
 ```
-그렇다 REST API는 반드시 REST해야한다.<br><br>
-그렇다면 Web API는 반드시 Restfull해야하는가?<br>
+그렇다 REST API는 반드시 Restful해야한다.<br><br>
+그렇다면 Web API는 반드시 Restful해야하는가?<br>
 ```
 REST emphasizes evolvability to sustain an uncontrollable system,. if you think you have control over the system or aren't interested in evolvability, don't wast your time arguing about REST. - Roy T.Fielding
 ```
