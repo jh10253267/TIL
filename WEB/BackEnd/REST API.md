@@ -47,7 +47,7 @@
  * 애플리케이션의 상태는 Hyperlink를 이용해 전이되야 한다.(HATEOAS)
   Hypermedia As The Engine Of Application State
 
- 첫번째와 두번째는 지키기 쉽지만 세번째와 API로는 쉽지가 않다.
+ 첫번째와 두번째는 지키기 쉽지만 세번째와 네번째를 지키기가 API로는 쉽지가 않다.
  그 이유는 응답 결과에 보통 JSON메시지를 사용하게 되는데 이 메세지가 어디로 전달이 되는지 그리고 이 메시지를 구성하는 것이 어떤 의미를 표현해야만 메시지 스스로 설명할 수 있다고 할 수 있는데 그게 쉽지 않은 부분이다. 연관된 웹페이지들 끼리는 하이퍼링크를 통해 연결되어 있다. 이를 HATEOAS라고 한다. 이런 부분을 JSON 응답메시지를 가지는 API가 제공하는 것은 쉽지 않다.<br><br>
  REST의 uniform interface를 지원하는 것은 쉽지 않기 때문에, 결국 많은 서비스가 REST에서 바라는 것을 모두 지원하지 않고 API를 만들게 된다. 그 방식은 두 가지가 있는데
 
@@ -58,19 +58,23 @@
 
 ## REST API 이대로 괜찮은가?
 
- IT 업계에선 비슷하지만 다른 다양한 용어가 있다. 그 말은 즉 세세하게 여러 부분으로 쪼갰다는 의미이다.<br>왜냐하면 용어가 명확히 구분되어 쓰이지 않는다면 소통에 문제가 생기고 이 문제는 점차 큰 단위로 퍼져나갈 수 있다.<br> REST를 주장한 로이 필딩은 강연등을 다니며 REST의 형식을 지키지 않았다면 REST API라는 명칭을 쓰지 말아달라며 호소하고 있다고 한다. REST는 우리가 알고있는 것보다 훨씬 까다롭고 복잡했던것이다.
+ IT 업계에선 비슷하지만 다른 다양한 용어가 있다. 그 말은 즉 세세하게 여러 부분으로 쪼갰다는 의미이다.<br>용어가 명확히 구분되어 쓰이지 않는다면 소통에 문제가 생기고 이 문제는 점차 큰 단위로 퍼져나갈 수 있다.<br><br> REST를 주장한 로이 필딩은 강연등을 다니며 REST의 형식을 지키지 않았다면 REST API라는 명칭을 쓰지 말아달라며 호소하고 있다고 한다. REST는 우리가 알고있는 것보다 훨씬 까다롭고 복잡했던것이다.
 
- REST에 대해 더 깊이 이해해보자 REST가 무엇을 위한 것인지부터 생각해봐야한다. 어떤 맥락에서 나온 개념이고 어떤 의도였는지 살펴보려한다.<br>
+ REST에 대해 더 깊이 이해해보자 REST가 무엇을 위한 것인지부터 생각해봐야한다. 어떤 맥락에서 나온 개념이고 어떤 의도였는지 살펴보려한다.<br><br>
  우선, 웹의 역사를 한 번 따라가보자.
  팀 버너스리의 WEB(1991)은 어떻게 인터넷에서 정보를 공유할 것인가에 대한 해답이였다. 팀 버너스리는 정보들을 하이퍼텍스트로 연결해서 정보를 공유하는 방식을 제안했고 표현 형식으로 HTML, 정보들의 식별자로 URL, 그리고 전송 방법으로 HTTP을 고안했다.
 
- 로이 필딩은 1994년~1996년 HTTP/1.0의 개발에 참여하고 있었고 웹은 급속도로 성장하고 있던 시점이었다. 그러던 중 고민이 생겼다. 로이 필딩이 HTTP에 기능을 더하고 수정한다면 이미 전 세계적으로 쓰이고 있는 HTTP와 기존의 웹 페이지들과의 호환성 문제를 피하기 어렵다고 느꼈다. 그래서 로이 필딩이 한 고민은 "How do I improve HTTP without breaking the Web?"
+ 로이 필딩은 1994년~1996년 HTTP/1.0의 개발에 참여하고 있었고 웹은 급속도로 성장하고 있던 시점이었다. 그러던 중 고민이 생겼다. 로이 필딩이 HTTP에 기능을 더하고 수정한다면 이미 전 세계적으로 쓰이고 있는 HTTP와 기존의 웹 페이지들과의 호환성 문제를 피하기 어렵다고 느꼈다. 그래서 로이 필딩이 한 고민은 이렇다.
+ > How do I improve HTTP without breaking the Web?"
+
  그가 내놓은 해답은 HTTP Object Model. 이게 4년 후 REST라는 이름으로 세상에 알려지게 된다.
 
- 왜 이런 스타일들이 필요할까?
-  -> 독립적 진화를 하기 위해서
- 클라이언트와 서버가 독립적으로 진화한다.
- 서버의 기능이 변경되어도 클라이언트를 업데이트할 필요가 없다.-> REST를 만들게 된 계기.
+ 왜 이런 스타일들이 필요할까?<br>
+  ㄴ> 독립적 진화를 하기 위해서<br>
+  <br>
+ 클라이언트와 서버가 독립적으로 진화한다.<br>
+ ㄴ> 서버의 기능이 변경되어도 클라이언트를 업데이트할 필요가 없다.
+ <br>ㄴ> REST를 만들게 된 계기.
 
  ### 우리 곁에 있는 REST
  우리가 사용하는 웹은 웹 페이지가 변경되었다고 해도 웹 브라우저(크롬, 사파리 등등)을 업데이트 할 필요는 없다.
@@ -86,7 +90,7 @@
  <br><br>
  이제 우리는 REST가 나온 맥락과 그 의미를 알았다.<br>
  REST는 웹의 독립적 진화를 위한 개념이다.<br>
- 그렇다면 REST가 웹의 독립적 진화에 실질적인 도움을 주었을까?<br>
+ 그렇다면 REST가 웹의 독립적 진화에 실질적인 도움을 주었을까?<br><br>
  * http에 지속적으로 영향을 줌
  * host헤더 추가 
  * 길이 제한 
@@ -97,14 +101,15 @@
 
 그럼 다시 돌아와서 우리의 관심사인 REST API는?
 우리의 API도 반드시 이러한 까다로운 제약조건들을 다 지켜야하는걸까?<br>
-```
-An API that provides network-based access to resources via a uniform interface of self-descriptive messages containing hypertext to indicate potention state transitions might be part of an overall system tha is a RESTful Applicaiton - Roy T.Fielding
-```
+
+>An API that provides network-based access to resources via a uniform interface of self-descriptive messages containing hypertext to indicate potention state transitions might be part of an overall system tha is a RESTful Applicaiton - Roy T.Fielding
+
 그렇다 REST API는 반드시 Restful해야한다.<br><br>
 그렇다면 Web API는 반드시 Restful해야하는가?<br>
-```
-REST emphasizes evolvability to sustain an uncontrollable system,. if you think you have control over the system or aren't interested in evolvability, don't wast your time arguing about REST. - Roy T.Fielding
-```
+
+> REST emphasizes evolvability to sustain an uncontrollable system,. if you think you have control over the system or aren't interested in evolvability, don't wast your time arguing about REST. - Roy T.Fielding
+
+
 그건 아니라고한다.
 
 그럼 우린 선택을 해야한다. <br>
@@ -116,8 +121,9 @@ REST emphasizes evolvability to sustain an uncontrollable system,. if you think 
 
 응답 메시지의 content-Type을 보고 media type이 application/json임을 확인한다.<br>
 명세에 midia type은 IANA에 등록되어있다고 하므로 IANA에서 applicaiton/json의 설명을 찾는다. 명세에는 json문서를 파싱하는 방법이 명시되어 있으므로 파싱이 가능하다. 그러나 여전히 id가 무엇을 의미하고 title이 무엇을 의미하는지 알 방법은 없다.<br>
--> self-descriptive하지 못하다.<br>
-다음 상태로 전이할 링크가 없다. -> HATEOAS를 만족하지 못한다.
+ㄴ> self-descriptive하지 못하다.<br>
+다음 상태로 전이할 링크가 없다. 
+<br>ㄴ> HATEOAS를 만족하지 못한다.
 
 이것들이 독립적인 진화에 어떻게 도움이 될까
 * self-descriptive : 확장 가능한 커뮤니케이션이    가능하게한다.
