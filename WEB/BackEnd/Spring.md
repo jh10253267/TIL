@@ -45,7 +45,7 @@
 
 DI는 의존성 주입이란 뜻을 가지고 있으며, 클래스 사이의 의존 관계를 빈(Bean) 설정 정보를 바탕으로 컨테이너가 자동으로 연결해주는 것을 말한다.
 
-DI가 적용되지 않은 예
+DI가 적용되지 않은 예<br>
 개발자가 직접 인스턴스를 생성하고 있다.
 ```java
  class 엔진 {
@@ -59,7 +59,8 @@ class 자동차 {
 <br>
 
 ![이미지](https://cphinf.pstatic.net/mooc/20181218_284/1545136782491NSgAa_JPEG/3.7.2-1.jpg?type=w760)
-컨테이너가 변수에 인스턴스를 할당해주고 있다.
+DI가 적용된 예<br>
+컨테이너가 변수에 인스턴스를 할당해주고 있다.<br>
 ```
 @Component
 class 엔진 {
@@ -86,7 +87,7 @@ class 자동차 {
 
 ### Spring에서 제공하는 IoC/DI 컨테이너
 
-* BeanFactory : IoC/DI에 대한 기본 기능을 가지고 있습니다.
+* BeanFactory : IoC/DI에 대한 기본 기능을 가지고 있다.
 * ApplicationContext : BeanFactory의 모든 기능을 포함하며, 일반적으로 BeanFactory보다 추천된다. 트랜잭션처리, AOP등에 대한 처리를 할 수 있다. 
 * BeanPostProcessor, BeanFactoryPostProcessor등을 자동으로 등록하고, 국제화 처리, 어플리케이션 이벤트 등을 처리할 수 있다.
 * BeanPostProcessor : 컨테이너의 기본로직을 오버라이딩하여 인스턴스화 와 의존성 처리 로직 등을 개발자가 원하는 대로 구현 할 수 있도록 한다.
