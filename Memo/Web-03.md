@@ -109,6 +109,7 @@ class 자동차 {
  * getter, setter메소드를 가진다(캡슐화를 유지하면서 내부에 접근할 수 있게하기 위함
  * 기본 생성자를 가진다.(내부적으로 Reflection을 사용하기 때문)
  <br>
+ [di 관련 실습 레포지토리](https://github.com/jh10253267/di-practice)
  <br>
 
 ```java
