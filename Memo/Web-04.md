@@ -81,7 +81,7 @@ Default MessageConvertor 를 제공
 컨트롤러의 메소드에서는 JSON으로 변환될 객체를 반환한다.
 
 jackson라이브러리를 추가할 경우 객체를 JSON으로 변환하는 메시지 컨버터가 사용되도록 @EnableWebMvc에서 기본으로 설정되어 있다.
-jackson라이브러리를 추가하지 않으면 JSON메시지로 변환할 수 없어 500오류가 발생합니다.
+jackson라이브러리를 추가하지 않으면 JSON메시지로 변환할 수 없어 500오류가 발생한다.
 사용자가 임의의 메시지 컨버터(MessageConverter)를 사용하도록 하려면 WebMvcConfigurerAdapter의 configureMessageConverters메소드를 오버라이딩 하도록 한다.
 
 ## DispatcherServlet
@@ -96,6 +96,7 @@ jackson라이브러리를 추가하지 않으면 JSON메시지로 변환할 수 
 4. 예외가 발생하지 않았다면 뷰를 렌더링한다.
 ### 선처리 작업
 ![선처리 작업](https://cphinf.pstatic.net/mooc/20180219_91/1519003885824QT31y_PNG/3.png?type=w760)
+
 스프링 MVC는 지역화를 지원한다. 우리가 어떤 웹사이트에 들어갔을 때 원래는 영어로 작성된 사이트인데도 한글로 보이는 경우가 있다. 그것은 해당 클라이언트로부터 오는 요청의 헤더에 따라서 각 언어에 맞는 페이지를 보여주는 것을 지역화라고 한다.
 
 컨트롤러가 가진 메소드 안에서 리퀘스트 객체를 사용하는 경우가 있는데 이럴 때 선언만 해주면 사용할 수 있다. 이게 RequestContextHolder 부분이다. 이런 방식은 스프링이 웹 기술에 종속되는 문제점을 갖는다. 그렇기에 권장하는 방법은 아니다.
@@ -156,6 +157,7 @@ org.springframework.web.servlet.HandlerAdapter
 @RequestMapping과 @Controller 애노테이션을 통해 정의되는 컨트롤러의 경우 DefaultAnnotationHandlerMapping에 의해 핸들러가 결정되고, 그에 대응되는 AnnotationMethodHandlerAdapter에 의해 호출이 일어난다.
 ```
  ![](https://cphinf.pstatic.net/mooc/20180219_167/1519004040926yL8eC_PNG/5.png?type=w760)
+ 
  결정 되었다면 사용 가능한 인터셉터가 있는지 확인한다. 
  프리한들을 호출해 요청 처리 -> 핸들러 실행
  리턴 객체가 모델 뷰가 뷰를 갖지 않는다면 RequestToViewNameTranslator 실행.
