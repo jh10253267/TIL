@@ -1,6 +1,6 @@
 # TIL(Today I Learned)
 
-![header](https://capsule-render.vercel.app/api?type=waving&color=timeGradient&text=TIL&animation=twinkling&fontSize=35&fontAlignY=40&fontAlign=50&height=250)
+![header](https://capsule-render.vercel.app/api?type=waving&color=timeGradient&text=TIL(Today I Learned)&animation=twinkling&fontSize=35&fontAlignY=40&fontAlign=50&height=250)
 
 ## 목차
 
@@ -56,12 +56,12 @@
 * [자바의 등장 배경](./JAVA/Intro/자바의%20등장%20배경.md)
 * [List vs ArrayList](./JAVA/List%20VS%20ArrayList.md)
 ## Memo
-* [Web-01](./Memo/Web-01.md)
-* [Web-02](./Memo/Web-02.md)
-* [Web-03](./Memo/Web-03.md)
-* [Web-04](./Memo/Web-04.md)
-* [Web-05](./Memo/Web-05.md)
-* [Web-06](./Memo/Web-06.md)
+* [스프링 이전의 자바 웹 개발](./Memo/Web-01.md)
+* [JDBC](./Memo/Web-02.md)
+* [Spring](./Memo/Web-03.md)
+* [Web MVC](./Memo/Web-04.md)
+* [Spring Boot](./Memo/Web-05.md)
+* [JPA](./Memo/Web-06.md)
 
 ## Python
 ## Network
