@@ -55,11 +55,12 @@ class 자동차 {
 ```
 <br>
 
-![이미지](https://cphinf.pstatic.net/mooc/20181218_284/1545136782491NSgAa_JPEG/3.7.2-1.jpg?type=w760)
+![이미지1](https://cphinf.pstatic.net/mooc/20181218_284/1545136782491NSgAa_JPEG/3.7.2-1.jpg?type=w760)
 
 
 <b>DI가 적용된 예</b><br><br>
 컨테이너가 변수에 인스턴스를 할당해주고 있다.<br>
+
 ```java
 @Component
 class 엔진 {
@@ -74,10 +75,10 @@ class 자동차 {
 
 ```
 
-<br>
 
-![이미지](https://cphinf.pstatic.net/mooc/20181218_190/1545137156742y8WiS_JPEG/3.7.2-2.jpg?type=w760)
-<br><br>
+![이미지2](https://cphinf.pstatic.net/mooc/20181218_190/1545137156742y8WiS_JPEG/3.7.2-2.jpg?type=w760)
+
+
 
 ### IoC(Inversion of Control) 
 컨테이너가 코드 대신 오브젝트의 제어권을 갖고 있어 IoC(제어의 역전)이라 한다.
@@ -109,7 +110,9 @@ class 자동차 {
  * getter, setter메소드를 가진다(캡슐화를 유지하면서 내부에 접근할 수 있게하기 위함
  * 기본 생성자를 가진다.(내부적으로 Reflection을 사용하기 때문)
  <br>
+
  [di 관련 실습 레포지토리](https://github.com/jh10253267/di-practice)
+
  <br><br>
 
 ```java
