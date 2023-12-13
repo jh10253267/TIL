@@ -1,6 +1,6 @@
 # TIL(Today I Learned)
 
-![header](https://capsule-render.vercel.app/api?type=waving&color=timeGradient&text=TIL(Today I Learned)&animation=twinkling&fontSize=35&fontAlignY=40&fontAlign=50&height=250)
+![header](https://capsule-render.vercel.app/api?type=waving&color=timeGradient&text=Today%20I%20Learned&animation=twinkling&fontSize=35&fontAlignY=40&fontAlign=50&height=250)
 
 ## 목차
 
