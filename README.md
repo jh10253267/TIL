@@ -8,9 +8,9 @@
 [4.알고리즘](#알고리즘)<br>
 [5.CS](#cs)<br>
 [6.JAVA](#java)<br>
-[7.Memo](#Memo)<br>
-[8.Python](#Python)<br>
-[9.WEB](#web)<br>
+[7.Memo](#memo)<br>
+[8.Python](#python)<br>
+[9.Network](#network)<br>
 
 
 ## Back-end
