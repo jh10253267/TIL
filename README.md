@@ -1,5 +1,7 @@
 # TIL(Today I Learned)
 
+![header](https://capsule-render.vercel.app/api?type=waving&color=timeGradient&text=TIL&animation=twinkling&fontSize=35&fontAlignY=40&fontAlign=50&height=250)
+
 ## 목차
 
 [1.Back-end](#back-end)<br>
