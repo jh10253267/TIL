@@ -53,7 +53,6 @@ class 자동차 {
      엔진 v5 = new 엔진();
 }
 ```
-<br>
 
 ![이미지1](https://cphinf.pstatic.net/mooc/20181218_284/1545136782491NSgAa_JPEG/3.7.2-1.jpg?type=w760)
 
