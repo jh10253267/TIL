@@ -15,6 +15,7 @@ MVC 모델은 지속적으로 개선되고 발전해왔는데 다음과 같다. 
 
 ### MVC Model 2 아키텍처
 ![MVC2](https://cphinf.pstatic.net/mooc/20180219_65/1519003382079lUcI5_PNG/2.png?type=w760)
+
 ### MVC Model2 발전형태
 ![MVC2 advanced](https://cphinf.pstatic.net/mooc/20180219_149/15190034013354diDI_PNG/3.png?type=w760)
 
