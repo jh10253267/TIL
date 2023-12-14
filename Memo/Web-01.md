@@ -23,7 +23,7 @@
 프론트엔드의 역할은 다음과 같다.
 * 웹 콘텐츠를 잘 보여주기 위해 구조를 만들어야한다. 
 * 적절한 배치와 일관된 디자인을 제공해야한다.
-* 자용자의 요청을 잘 반영해야한다.
+* 사용자의 요청을 잘 반영해야한다.
 
 [프론트엔드의 구성](https://html-css-js.com/)
 
@@ -41,6 +41,7 @@
 ![브라우저의 내부구조](https://web.dev/static/articles/howbrowserswork/image/browser-components-9cd8ff834cc9c_1920.png?hl=ko)<br><br>
 쉽게 요약하자면 브라우저는 HTML을 해석해서 DOM Tree를 그리고 HTML의 문서구조를 파악한다.<br>
 그리고 css를 해석해서 CSS Tree를 그린다. 그리고 이 두개는 연관되어있으므로 Render Tree로 다시 조합된다.<br> 이렇게 조합된 결과는 요소들을 화면의 어떤 위치에 어떻게 배치할 것인지에 대한 정보를 담고있다.
+(이 부분에 대해 좀 더 공부해본다면 리액트의 등장 배경을 알 수 있다.)
 
 ## 고전적인 웹
 스프링이 등장하기 이전의 웹은 JAVA EE 라는 기술스펙을 이용했다.<br> 웹을 구현하기 위한 고민들을 하나로 묶어 방대한 기술스펙으로 제공한 것이 JAVA EE이다.<br> JAVA EE의 주요 기술 스펙은 <b>서블릿</b>과 <b>JSP</b>로 서버측에서 데이터를 처리할 수 있도록 하는 서버사이드 프로그래밍 방식의 접근이다.<br>
@@ -50,7 +51,8 @@
 서블릿은 주로 HttpServlet클래스를 상속받아 사용하는데 메소드로는 대표적으로 doGet, doPost등이 있다.GET요청을 받을 때 사용하고 doPOST메소드는 POST요청을 받을 때 사용한다.<br>
 인자로는 HttpServletRequest 와 HttpServletResponse가 있는데 리퀘스트는 사용자의 요청에 대한 정보를 담고있고 리스폰스는 사용자에게 응답을 할 수 있는 메소드를 포함하고 있다.<br><br>
 서블릿은 다음과 같이 사용할 수 있다.
-```
+
+```java
 @WebServlet("/example")
 public class ExamController extends HttpServlet {
     @Override
@@ -63,11 +65,11 @@ public class ExamController extends HttpServlet {
     }
 }
 
-
 ```
-```@WebServlet```은 어떤 경로로 오는 요청을 받을 것인지 나타낸다.<br> 서블릿 버전 3.0 이전에는 web.xml에 정의해두는 방식이였지만 서블렛 3.0이후부턴 간단하게 어노테이션만 붙이면 사용할 수 있다.<br><br>
+
+`@WebServlet`은 어떤 경로로 오는 요청을 받을 것인지 나타낸다.<br> 서블릿 버전 3.0 이전에는 web.xml에 정의해두는 방식이였지만 서블렛 3.0이후부턴 간단하게 어노테이션만 붙이면 사용할 수 있다.<br><br>
 구조를 보면 HttpServlet을 상속받고 있고 doGet이라는 메소드를 오버라이딩해서 사용하고 있는 것을 알 수 있다.<br><br>
-위와 같은 방법으로 브라우저에 간단한 문구를 화면에 출력할 수 있는데 ```resp.setContentType("text/html;charset=utf-8");```로 PrintWriter의 출력 인코딩 형식을 정할 수 있다. <br><br>고전적인 웹의 경우 위와같이 리스폰스 객체에서 PrintWriter객체를 얻어와 출력문 안에 한 줄 한 줄 HTML코드를 넣었다고 한다.
+위와 같은 방법으로 브라우저에 간단한 문구를 화면에 출력할 수 있는데 `resp.setContentType("text/html;charset=utf-8");`로 PrintWriter의 출력 인코딩 형식을 정할 수 있다. <br><br>고전적인 웹의 경우 위와같이 리스폰스 객체에서 PrintWriter객체를 얻어와 출력문 안에 한 줄 한 줄 HTML코드를 넣었다고 한다.
 
 ### JSP
 마이크로소프트의 ASP(Active Server Pages)와 같은 스크립트 형태의 개발 방법이 인기를 얻게 되면서, 자바 진영에서도 대항하기 위해서 JSP를 발표하게 된다.<br><br>
@@ -97,19 +99,19 @@ JSP는 근본적으로 서블릿과 같은 원리이지만(실제로 jsp가 컴�
   * getParameterValues()
   * getParameterNames()
 * 쿠키 관련 - 브라우저가 전송한 쿠키 정보
-  * GetCookies()
+  * getCookies()
 * 전달 관련
   * getRequestDispatcher()
 * 데이터 저장 - 전달하기 전에 필요한 데이터를 저장하는 용도
   * setAttribute()    
 
-여기서 주로 사용하는 것은 ```getParameter()```메소드로 인터넷 주소창을 보면 주소의 끝 부분에 ```?name=Jun&age=20```과 같은 문자열을 볼 수 있는데 이런 방식을 쿼리스트링이라고 부른다.<br><br>
-등호를 기준으로 왼쪽은 키, 오른쪽은 값이다. 여러개의 키와 값이 존재할 경우 &를 통해서 연결시킨다.
-```https://www.boostcourse.org/web316/lecture/16702?isDesc=false```와 같이 주변에서 흔하게 찾아볼 수 있다.<br><br>
-```getParameterValues```는 동일한 이름의 파라미터가 여러개 존재하는 경우에 사용한다.<br>
-```setAttribute```는 JSP로 전달할 데이터를 추가할 때 사용한다.<br>
+여기서 주로 사용하는 것은 `getParameter()`메소드로 인터넷 주소창을 보면 주소의 끝 부분에 `?name=Jun&age=20`과 같은 문자열을 볼 수 있는데 이런 방식을 쿼리스트링이라고 부른다.<br><br>
+등호를 기준으로 왼쪽은 키, 오른쪽은 값이다. 여러개의 키와 값이 존재할 경우 & 를 통해서 연결시킨다.
+`https://www.boostcourse.org/web316/lecture/16702?isDesc=false`와 같이 주변에서 흔하게 찾아볼 수 있다.<br><br>
+`getParameterValues`는 동일한 이름의 파라미터가 여러개 존재하는 경우에 사용한다.<br>
+`setAttribute`는 JSP로 전달할 데이터를 추가할 때 사용한다.<br>
 형식은 키와 값의 형태이고 키는 문자열, 값은 모든 객체타입을 사용할 수 있다.<br>
-```RequestDispatcher```는 컨트롤러인 서블릿이 데이터 처리를 마치고 JSP에 전달해주는 용도로 사용한다.<br> 여기는 두가지 메소드가 존재하는데 ```forward(), include()```이다. 주로 ```forward```를 많이 사용한다. <br><br>
+`RequestDispatcher`는 컨트롤러인 서블릿이 데이터 처리를 마치고 JSP에 전달해주는 용도로 사용한다.<br> 여기는 두가지 메소드가 존재하는데 `forward(), include()`이다. 주로 `forward`를 많이 사용한다. <br><br>
 <b>HttpServletResponse의 주요 기능</b>
 * setContentType()
 * setHeader()
@@ -118,6 +120,7 @@ JSP는 근본적으로 서블릿과 같은 원리이지만(실제로 jsp가 컴�
 * addCookie()
 * sendRedirect()
 
-주로 ```sendRedirect```가 많이 사용된다.<br>
-```sendRedirect```는 다른곳으로 가라는 응답 메시지를 전달한다.<br> HTTP에서 Location이라는 이름의 HTTP헤더로 전달되는데 브라우저는 Location이 있는 응답을 받으면 주소창에 지정된 주소로 이동하고 다시 호출하게 된다.<br><br>
-이를 사용하면 브라우저의 주소가 아예 변경되기 때문에 사용자의 새로고침과 같은 요청을 미리 방지할 수 있다.<br> 이는 요청을 두  특정한 작업이 끝나고 완전히 새로 시작하는 흐름을 만들 수 있다.
+주로 `sendRedirect`가 많이 사용된다.<br>
+`sendRedirect`는 다른곳으로 가라는 응답 메시지를 전달한다.<br> HTTP에서 Location이라는 이름의 HTTP헤더로 전달되는데 브라우저는 Location이 있는 응답을 받으면 주소창에 지정된 주소로 이동하고 다시 호출하게 된다.<br><br>
+
+이를 사용하면 브라우저의 주소가 아예 변경되기 때문에 사용자의 새로고침과 같은 요청을 미리 방지할 수 있다.<br> 이는 요청을 두  특정한 작업이 끝나고 완전히 새로 시작하는 흐름을 만들 수 있다. 이러한 패턴을 PRG(Post Redirection Get)패턴이라고 부른다. 우리가 웹사이트에서 회원가입을 하거나 게시글을 등록하는 등의 작업을 했을 때 흔히 볼 수 있는 패턴이다.
