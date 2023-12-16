@@ -14,7 +14,7 @@
 ```sql
 INSERT INTO STUDENTS(name) VALUES('학생 이름');
 ```
-만약 여기서 공격자가 서버에서 실행될 쿼리문을 유추해서 악의적인 목적으로 학생의 이름을 `Robert'; DROP TABLE STUDENTS;--')`로 입력하면 이 값이 value 괄호안에 들어가서 쿼리문이 실행된다. (뒤에 -- 기호는 주석을 나타낸다.)
+만약 여기서 공격자가 서버에서 실행될 쿼리문을 유추해서 악의적인 목적으로 학생의 이름을 `Robert'); DROP TABLE STUDENTS;--')`로 입력하면 이 값이 value 괄호안에 들어가서 쿼리문이 실행된다. (뒤에 -- 기호는 주석을 나타낸다.)
 
 ```sql
 INSERT INTO STUDENTS(name) VALUES('Robert'); DROP TABLE STUDENTS;--')
