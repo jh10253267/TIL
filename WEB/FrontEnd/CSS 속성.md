@@ -189,9 +189,9 @@ x축과 y축을 명시할 수도 있다.
 
 * `font-size `
   값 | 설명
-    --|--
-    기본값 | 16px
-    단위 | px,em,rem 등
+  --|--
+  기본값 | 16px
+  단위 | px,em,rem 등
   
   
 ### 문자
@@ -200,7 +200,7 @@ x축과 y축을 명시할 수도 있다.
   --|--
   기본값 | left
   right | 우측 정렬
-  center | 좌측 정렬
+  center | 중앙 정렬
 
 
 * `text-decoration`
