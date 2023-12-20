@@ -131,3 +131,132 @@ let hello = "hello world!";
 ```
 위와 같이 타입스크립트의 문법이 사라지고 자바스크립트 문법으로 변환된 것을 확인할 수 있다.
 
+타입을 체크하긴 하지만 그 사용법이 다른 언어들과 다르게 자유롭다
+
+숫자
+----
+
+```javascript
+let num: number
+let integer: number = 10
+let float: number = 3.14
+let infinity: number = Infinity
+let nan: number = NaN
+```
+
+불리언
+----
+
+```javascript
+let isBoolean: boolean
+let isDone: boolean = false
+```
+
+널/언디파인드
+----
+
+```javascript
+let nul: null
+let und: undefined
+```
+
+배열
+----
+
+```javascript
+const fruits: string[] = ['Type', 'script]
+const numbers: number[] = [1,2,3,4,5]
+const union: (String|number)[] = ['Type', 1, 2, 'script']
+```
+
+객체
+----
+
+타입스크립트로 객체 데이터를 사용할 경우 object라는 키워드를 명시해서 사용하기 보단 밑의 userA처럼 객체의 필드값에 대한 일종의 정의를 해서 쓴다.
+
+
+```javascript
+const obj: object = {}
+const arr: object = []
+const func: object = function() {}
+
+const userA: {
+  name: string
+  age: number
+  isValid: boolean
+  = {
+    name: 'user',
+    age: 20,
+    isValid: true
+  }
+}
+
+const userB: {
+  name: string
+  age: number
+  isValid: boolean
+  = {
+    name: 'user',
+    age: 20,
+    isValid: true
+  }
+}
+```
+uesrA와 userB는 형식은 같고 내용이 다르다
+
+이렇게 형식은 같고 내용이 다른 객체들을 여러개 만들어야한다면 중복되는 코드가 생긴다. 개발자들은 중복되는 코드를 매우 싫어하기 때문에 당연히 중복되는 코드들을 일반화하는 방법이 있을거라고 유추할 수 있다.
+
+바로 인터페이스라는 개념인데 다음과 같이 사용할 수 있다.
+
+```javascript
+interface User{ 
+  name : string,
+  age : number,
+  isValid : boolean
+}
+
+const userA: User={
+  name: 'userA',
+  age: 20,
+  isValid: true
+}
+
+const userB: User={
+  name: 'userB',
+  age: 22,
+  isValid: true  
+}
+```
+
+인터페이스에 선언되지 않은 속성을 새롭게 추가하면 오류가난다.
+
+함수
+----
+
+일반적인 화살표 함수의 사용법에서 크게 벗어나지 않는다. 바뀐 부분은 각 파라미터에 대한 타입 정의와 리턴값의 타입을 지정해주는 부분이다.
+
+```javascript
+const add: (x: number, y: number) => number = function(x, y) {
+  return x + y
+}
+//이렇게 작성할 수도 있다.
+const add1: function(x: number, y: number): number{
+  return x + y
+}
+// add함수의 리턴형은 number이기 때문에 받는 변수의 타입도 마찬가지로 number여야한다
+const a: number = add(1, 2)
+```
+
+리턴해주는 값이 없는 경우가 있다.
+
+```javascript
+const sayHello: () => void = function() {
+  console.log("Hello~~")
+}
+
+const sayHello1: = function(): void {
+  console.log("Hello~~")
+}
+
+const h: void = sayHello()
+```
