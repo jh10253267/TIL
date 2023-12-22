@@ -235,6 +235,8 @@ const userB: User={
 
 일반적인 화살표 함수의 사용법에서 크게 벗어나지 않는다. 바뀐 부분은 각 파라미터에 대한 타입 정의와 리턴값의 타입을 지정해주는 부분이다.
 
+마치 컴파일 언어들처럼 작성할 수 있다.
+
 ```javascript
 const add: (x: number, y: number) => number = function(x, y) {
   return x + y
@@ -247,7 +249,7 @@ const add1: function(x: number, y: number): number{
 const a: number = add(1, 2)
 ```
 
-리턴해주는 값이 없는 경우가 있다.
+리턴해주는 값이 없는 경우는 다음과 같이 작성할 수 있다.
 
 ```javascript
 const sayHello: () => void = function() {
@@ -260,3 +262,117 @@ const sayHello1: = function(): void {
 
 const h: void = sayHello()
 ```
+
+Any
+-----
+
+any 키워드는 모든 타입이 올 수 있다.
+
+```javascript
+let hello: any = 'Hello world'
+hello = 1234
+hello = null
+```
+
+그러나 타입을 체크하지 않느다면 타입스크립트를 사용하는 의미가 없다.
+
+따라서 any타입의 사용을 권장하지 않는다.
+
+
+Unknown
+-------
+
+정확하게 어떤 타입이 올지 알 수 없어서 unknown으로 표현하겠다 라는 의미이다.
+
+any와 비슷한 개념같지만 조금 차이가 있다.
+
+우선 any를 살펴보면 다음과 같다.
+```javascript
+let hello: any = 'Hello world'
+
+const boo: boolean = hello // 문제없음
+const num: number = hello // 문제 없음
+```
+
+그러나 unknown은 any처럼 다른 타입의 값에 할당할 수 없다.
+
+```javascript
+let hello: unknown = 'Hello world'
+
+const boo: boolean = hello // 할당 불가
+const num: number = hello // 할당 불가
+```
+
+그래서 타입을 특정짓기 힘들 경우에 any를 사용하는 것보다 타입스크립트의 사용이 의미를 가지려면 unknown을 사용하는 것이 좋다. 
+
+
+Tuple
+-----
+
+```javascript
+const tuple: [String, number, boolean] = ['a', 1. true]
+```
+
+리스트와 비슷한 형태이고 자료형을 지정할 수 있다.
+
+
+Void
+-------
+
+함수에서 리턴값이 없을 경우 반환 타입을 void로 작성할 수 있다.
+
+```javascript
+const sayHello1: = function(): void {
+  console.log("Hello~~")
+}
+```
+
+Never
+-----
+
+const nev: [] = []
+//const nev: [Never] = []
+
+이렇게 아무 타입을 넣어주지 않으면 Never라는 타입이 들어간다. Never타입은 아무값이 들어갈 수 없는 타입이다.
+
+Union
+-------
+유니온은 타입이 두가지 이상 올 때 사용할 수 있다.
+
+let union: string | number
+
+Interscetion
+-----
+
+위에서 봤던 인터페이스의 내용을 보면
+
+```javascript
+
+```
+
+const test: User & Validation = {
+  name: 'jun',
+  age: 25,
+  isValid: true
+}
+
+이렇게 사용할 수 있다. 
+
+
+## 타입 추론
+
+위에서 타입을 매번 지정해줬는데 귀찮다고 느낄수도 있다. 이를 위해 타입스크립트는 타입 추론을 제공한다. 그래서 매번 타입을 지정할 필요 없이 필요한 곳에서만(컴퓨터가 추론하기 힘든부분) 타입을 지정해서 쓸 수 있다.
+
+```javascript
+let num = 12
+num = 'Hello world' // 할당 불가
+```
+
+위의 코드는 number라는 타입을 명시하지 않았다. 그러나 문자열을 재할당 하려고 할 때 에러가난다. 타입스크립트가 num에 초기 할당된 타입이 number라는 것을 추론해서 자동으로 타입을 설정하고있기 때문이다.
+
+조금 더 자세히 알아보면 타입 추론을 하는 일종의 룰이있다.
+
+* 초기화된 변수
+* 기본값이 설정된 매개변수
+* 반환값이 있는 함수
+
