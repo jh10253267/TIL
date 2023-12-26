@@ -376,3 +376,90 @@ num = 'Hello world' // 할당 불가
 * 기본값이 설정된 매개변수
 * 반환값이 있는 함수
 
+## Assertion
+
+단언 - 주하지 않고 딱 잘라 말함.
+
+타입스크립트에서의 Assertion의 의미도 다르지 않다.
+
+const el = document.querySelector("body");
+
+이렇게 선언한다면 el은 HTMLBodyElement 이거나 null일 수 있다는 문구가 나온다.
+
+만에하나 html 코드에 body가 없다면 쿼리 선택자는 요소를 찾지 못할 수 도 있다. 그러나 일반적인 html코드는 body를 반드시 포함한다.
+
+타입스크립트의 입장에선 해당 요소가 있음을 확신할 수 없다.
+
+이럴 때 사용하는 것이 Assertion이다.
+
+바로 이렇게
+
+```javascript
+const el = document.querytSelector('body') as HTMLBodyElement
+```
+
+```javascript
+function getNumber(x: number | null | undefined) {
+  return Number(x.toFixed(2))
+}
+```
+toFixed는 숫자에 사용할 수 있는 함수이다.
+
+그러나 null과 undifined에는 사용할 수 없다.
+
+이럴 때 Assertion을 사용할 수 있다.
+
+```javascript
+function getNumber(x: number | null | undefined) {
+  return Number((x as number).toFixed(2))
+}
+```
+이러면 x가 숫자일경우에는 작동하지만 Null이나 undifined가 오면 오류를 발생시킨다.
+
+
+```javascript
+function getValue(x: string | number, isNumber: boolean) {
+  if(isNumber) {
+    return Number(x.toFixed(2))
+  }
+  return x.toUpperCase()
+}
+
+getValue('hello world', false)
+getValue(3.14, true)
+```
+
+로직상으론 아무 문제가 없다. 그러나 타입스크립트에선 오류를 발생시키는데 
+x라는 타입 모두에서 toUpperCase를 수행할 수 없다는 에러이다.
+
+타입스크립트가 이해하지 못하는 것이다.
+
+그래서 이런 부분에서도 Assertion을 사용할 수 있다.
+
+```javascript
+function getValue(x: string | number, isNumber: boolean) {
+  if(isNumber) {
+    return Number((x as number).toFixed(2))
+  }
+  return (x as string).toUpperCase()
+}
+
+getValue('hello world', false)
+getValue(3.14, true)
+```
+
+이렇게 작성하면 오류가 발생하지 않는다.
+
+as라는 키워드를 사용했지만 Assertion은 as만 있지 않다. 느낌표를 사용해서 널이 아니라고 단언을 해줄 수 있다.
+
+
+```javascript
+function getNumber(x: number | null | undefined) {
+  return Number(x!.toFixed(2));
+}
+```
+
+이렇게
+
+
+
