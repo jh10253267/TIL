@@ -94,7 +94,7 @@ public class loginCheckFilter() implements Filter{
 (프레임워크 == 반제품)
 
 ## 스프링 시큐리티 필터 체인
-![Alt text](image.png)
+![Alt text](https://cphinf.pstatic.net/mooc/20200301_110/1583061393744OaYB4_PNG/mceclip1.png)
 
 * SecurityContextPersistenceFilter : SecurityContextRepository에서 SecurityContext를 가져오거나 저장한다.
 
@@ -118,7 +118,7 @@ public class loginCheckFilter() implements Filter{
 
 * FilterSecurityInterceptor : AccessDecisionManager로 권한부여 처리를 위임해 접근 제어결정을 돕는다.
 
-![Alt text](image-1.png)
+![Alt text](https://cphinf.pstatic.net/mooc/20200301_136/1583062306462164xS_PNG/mceclip2.png)
 
 실제 로그인을 처리하는 필터는 `UsernamePasswordAuthenticationFilter`이다. 이는 `AbstractAuthenticationProcessionFilter`를 구현한 것이다.
 
@@ -132,7 +132,7 @@ public class loginCheckFilter() implements Filter{
 * AuthenticationProvider
 * UserDetailsService
 
-이들을 통해 유저의 정보를 읽어온다.
+이들을 통해 유저의 정보를 읽어오고 인증을 처리한다.
 
 이중 가장 중요한 요소는 실제로 인증을 처리하는 `UserDetailsService이다`.
 
@@ -211,7 +211,7 @@ public WebSecurityCustomizer webSecurityCustomizer() {
 
  스프링 시큐리티의 api에는 `userDetails`라는 인터페이스를 구현한 User라는 클래스를 제공하고 빌더방식을 지원하므로 앞에서 사용한 loadUserByUsername()에 약간의 코드를 추가해줄 수 있다.
 
- * PasswordEncoder
+ * `PasswordEncoder`
 
     스프링 시큐리티는 기본적으로 PasswordEncoder를 필요로 한다. 이는 인터페이스로 제공되는데 이를 구현하거나 스프링 시큐리티 api에서 제공하는 클래스를 지정할 수 있다. 해당 타입의 클래스중 BCryptPasswordEncoder는 해시 알고리즘으로 암호화 처리되는데 같은 문자열이라도 매번 해시 처리된 결과가 다르다는 특징이 있다.
  
