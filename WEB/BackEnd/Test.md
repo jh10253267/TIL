@@ -206,11 +206,60 @@ class ArticleControllerTest {
         
     }
 ```
-### DataJpaTest
 
-DataJpaTest는 영속계층을 테스트하기 위한 어노테이션이다. 테스트는 항상 일정해야하며 독립적으로 타겟의 작동만 테스트할 수 있어야한다. 예를 들어 일반 통합테스트를 수행하면 DB에 내용이 들어가고 내용이 삭제된다. 만약 delete테스트를 수행해서 해당 id값을 가진 엔티티가 없는데 select테스트를 수행하면 테스트에 실패한다. 실제 테스트하려는 기능은 제대로 작동한다고 해도 말이다. 이런 문제를 @SpringBootTest에서 @Transactional어노테션을 붙여주어 해결할 수도 있지만 슬라이스테스트라고 보긴 어렵다. 그래서 @Transactioanl 어노테이션이 내장되어있는 DataJpaTest로 해결할 수 있다.
+## Mocking
 
-DataJpaTest는 JPA와 관련된 설정들만 읽어오고 기본적으로 롤백이 수행된다. 즉 테스트 상황에서의 변경점이 데이터베이스에 반영되지 않는다. 
+### @Mock vs @MockBean
+
+이 두 애노테이션의 차이점은 자바의 객체로 보고 모킹을 할 것인지 스프링의 빈으로 보고 모킹을 할 것인지이다.
+
+사용 방법도 다른데
+@Mock으로 모킹한 객체를 @InjectMocks 애노테이션을 붙인 테스트 대상에서 사용하고
+
+@MockBean으로 모킹한 빈을 @Autowired로 불러온 테스트 대상 빈에 주입시켜 사용한다.
+
+@MockBean을 사용한다면 스프링 컨테이너가 객체를 생성하고 주입시켜주는 방식이기에 @SpringBootTest 애노테이션을 사용하여 테스트해야한다.
+
+### 사용 방법
+
+테스트 수행시 의존하고 있는 객체의 행동을 정해준다. 즉, 테스트 대상이 아닌 대상이 정해진 행동을 하도록 설정해준다.
+
+기본적으로 when() 메소드를 사용한다.
+```java
+when(어떤 메소드를 실행시켰을때).thenReturn(이런 값을 반환한다.);
+```
+when() 메소드는 위에서 소개한 대로 gwt 패턴 Given(주어진 상황에서), When(이렇게 했을 때), Then(이렇게 된다.)과 비교했을 때 다소 부자연스럽다는 단점이 있다. given 조건으로 들어가야할 것들이 when으로 들어가서 그렇다.
+
+이런 부분을 해결할 수 있는 것이 바로 BDD Mockito이다.
+
+BDD Mockito는 모킹하는 부분에서 given() 메소드를 사용한다.
+사용법도 when()과 크게 다르지 않다.
+
+```java
+// Given
+given().willReturn();
+
+// When
+
+// Then
+```
+이런식으로 사용할 수 있다.
+
+### 테스트하기 어려운 부분
+
+어떤 값을 리턴하는 메소드라면 assertThat(actualResult).isEqualto(expectedResult);로 검증할 수 있겠지만 값을 리턴하지 않는 메소드는 어떻게 테스트해야할지 고민된다.
+
+
+
+```java
+assertThatCode(() -> sut.delete(1L))doesNotThrowAnyException();
+```
+
+위와 같이 작성할 수 있겠지만 정확하게 테스트 되었다고는 보기 힘들다.
+
+이럴 때 사용할 수 있는 메소드가 바로 `verify()`이다.
+
+테스트 대상 메소드를 호출했을 때 반드시 호출되는 메소드가 있다면 verify(myRepository, times(1)).delete(1L); 과 같이 작성해서 테스트하려는 메소드가 실행될 때 내부의 메소드가 실행되었는지 검증하는 방법으로 테스트 해볼 수 있다.
 
 
 
