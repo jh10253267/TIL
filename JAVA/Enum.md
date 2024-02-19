@@ -36,3 +36,10 @@ public enum KoreanCity {
 
 이러한 특징을 이용하면 싱글톤 패턴을 구현할 수 있다. 싱글톤 패턴은 하나의 객체만 사용하는 것이기 때문에 생성할 객체의 수를 명시해두면 된다. INSTANCE; 그리고 객체를 사용할 때 SampleClass.INSTANCE 와 같이 사용할 수 있다.
 
+메소드를 정의하는 것도 가능하다.
+
+바로 enum 클래스 내부에 아래와 같이 정의하는 것이다.
+```java
+    public abstract int arithmeticCalculate(final int operand1, final int operand2);
+```
+
