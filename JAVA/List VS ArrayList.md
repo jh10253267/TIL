@@ -5,10 +5,13 @@ List<String> list = new ArrayList<>();
 ArrayList<String> list = new ArrayList<>();
 ``` 
 둘 다 같은 동작을 수행할 수 있다.
+
 ## List와 ArrayList의 차이.
+
 List는 인터페이스로 그 구현체가 ArrayList와 LinkedList 둘 중 어느것이 와도 사용할 수 있다.
 
 ArrayList로 선언할 경우
+
 ```java
 ArrayList<String> list = new ArrayList<>();
 list = new LinkedList<>(); // error

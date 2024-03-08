@@ -1,6 +1,7 @@
 # Type Script
 
 ## 개요
+
 세상에는 여러가지 프로그래밍 언어가 있다. 그 언어마다의 용도와 특성이 모두 다른데 여러가지 언어를 경험해 봤다면 자유로운 형식의 언어와 스트릭한 형식의 언어로 나눠볼 수 있을것이다.
 
 예를 들어 c언어를 사용할 때 6줄의 코드를 작성해서 콘솔창에 Hello World를 출력했고 파이썬을 사용할 땐 한줄의 코드만 작성하면 된다.
@@ -21,10 +22,9 @@ function sum(num1, num2) {
 sum(10, 20); // 30
 sum('10', '20'); //1020
 ```
-그러나 우리가 원하는 결과는 첫번째 결과처럼 숫자 두 개를 더하는 것이였는데 문자열 두개를 이어버리는 연산이 수행되어버렸다.
+우리가 원하는 결과는 첫번째 결과처럼 숫자 두 개를 더하는 것이였는데 문자열 두개를 이어버리는 연산이 수행되어버렸다.
 
 이렇게 타입이 정수형이 아닌 문자형을 입력해도 오류를 발생시키지 않고 작동한다.
-
 
 의도치 않은 입력값이 들어갔고 그로인해 의도치 않은 동작이 수행된다.
 
@@ -41,7 +41,6 @@ sum('10', '20'); //1020
 슈퍼셋은 기본적으로 자바스크립트의 기능을 모두 가지고있고 추가적인 기능을 포함하고있다는 의미이다.
 
 오늘날 우리가 사용하는 대부분의 라이브러리나 프레임워크는 타입스크립트를 지원한다. 범용적으로 사용할 수 있다는 의미이다.
-
 
 ## Let's get started!
 
@@ -398,6 +397,25 @@ const el = document.querySelector("body");
 const el = document.querytSelector('body') as HTMLBodyElement
 ```
 
+그러나 body태그가 아니라 일반적인 요소라면? 존재하지 않는 요소일 수 있다. 이럴 때 문제가 되는 게 아래의 경우다.
+
+타입 단언을 통해 el이 null이 아니라고 단언해주었기 때문에 타입 에러가 발생하지 않지만 실제로는 에러가 발생하게되는데...
+
+```javascript
+const el = document.querytSelector('.title')
+el!.textContent = 'Hello world?!'
+```
+
+어떻게 해결할 수 있을까? 바로 자바스크립트에서 false로 인식하는 대표적인 undefined를 체크하는 것이다. 다음과 같다.
+
+```javascript
+const el = document.querytSelector('.title')
+// el이 존재할 때만 아래 내용을 수행한다.
+if(el) {
+  el.textContent = 'Hello world?!'
+}
+```
+
 ```javascript
 function getNumber(x: number | null | undefined) {
   return Number(x.toFixed(2))
@@ -405,7 +423,7 @@ function getNumber(x: number | null | undefined) {
 ```
 toFixed는 숫자에 사용할 수 있는 함수이다.
 
-그러나 null과 undifined에는 사용할 수 없다.
+그러니 null과 undifined에는 사용할 수 없다.
 
 이럴 때 Assertion을 사용할 수 있다.
 
@@ -414,7 +432,18 @@ function getNumber(x: number | null | undefined) {
   return Number((x as number).toFixed(2))
 }
 ```
+
 이러면 x가 숫자일경우에는 작동하지만 Null이나 undifined가 오면 오류를 발생시킨다.
+
+```javascript
+function getNumber(x: number | null | undefined) {
+  if(x){
+    return Number((x as number).toFixed(2))
+  }
+}
+```
+
+위의 코드를 보면 x는 숫자, 널, 언디파인드일 수 있다. 그래서 이를 이용해 조건문을 작성할 수도 있다. x가 null 혹은 undefined라면 조건문은 false이고 숫자 타입중에서 0을 제외한 숫자들은 모두 참이기 때문에 위와 같이 타입 단언을 해주지 않고도 코드를 작성할 수 있다.
 
 
 ```javascript
@@ -429,12 +458,13 @@ getValue('hello world', false)
 getValue(3.14, true)
 ```
 
-로직상으론 아무 문제가 없다. 그러나 타입스크립트에선 오류를 발생시키는데 
+로직상으론 아무 문제가 없다. 그러나 타입스크립트에선 오류를 발생시키는데
 x라는 타입 모두에서 toUpperCase를 수행할 수 없다는 에러이다.
 
 타입스크립트가 이해하지 못하는 것이다.
 
 그래서 이런 부분에서도 Assertion을 사용할 수 있다.
+
 
 ```javascript
 function getValue(x: string | number, isNumber: boolean) {
@@ -457,9 +487,26 @@ as라는 키워드를 사용했지만 Assertion은 as만 있지 않다. 느낌�
 function getNumber(x: number | null | undefined) {
   return Number(x!.toFixed(2));
 }
+getNumber(3.141592)
+getNumber(null)
 ```
 
-이렇게
+이렇게.
 
 
+### 할당 단언
+```js
+let num: number
+console.log(num) // error
+num = 123
+```
+
+위의 코드에서 에러가 나는 이유는 타입스크립트가 값이 할당되지 않은 변수의 사용을 감지하고 에러를 발생시킨다.
+
+이럴 경우 할당 단언을 사용할 수 있다.
+
+```js
+let num!: number
+console.log(num) // 정상 작동
+```
 
