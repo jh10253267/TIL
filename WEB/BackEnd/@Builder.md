@@ -35,3 +35,13 @@ Class Car {
 보통은 직접 구현하지 않고 롬복의 @Builder 에노테이션을 사용한다.
 
 롬복을 사용한다면 @AllArgsConstructor 애노테이션과 같이 사용하여 객체를 만들 수 있다.
+
+위의 경우 다음과 같이 빌더를 사용할 수 있다.
+
+```java
+@Builder
+Class Car {
+  private int number;
+  private Engine engine;
+}
+```
