@@ -11,7 +11,7 @@
 ```javascript
 let obj = {name : "user1", age: "20"};
 
-console.log(obj["name]);
+console.log(obj["name"]);
 console.log(obj.age);
 ```
 자바스크립트의 객체구조를 본따 서버와 웹 브라우저간에 데이터를 주고받을 때 정의한 JSON이라는 것이 있다.
