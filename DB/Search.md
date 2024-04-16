@@ -33,7 +33,7 @@ SELECT * FROM post WHERE title LIKE '%test%'
 
 그럼 이러한 부분 검색에 인덱스를 사용하여 검색 성능을 높이듯이 성능을 개선할 수 있는 방법이 뭐가있을까?
 
-Mysql에서는 문자열 검색을 위해 Full Table Search를 지원한다.
+Mysql에서는 문자열 검색을 위해 Full Text Search를 지원한다.
 
 이는 단어나 구문을 잘게 쪼개어 인덱스를 생성하는 방법이다.
 

@@ -31,6 +31,7 @@ cache action은 github actions에서 지원하고 있다.
 ```
 path: 캐시의 저장과 복원에 사용되는 runner내부의 파일 경로이다.
 key: 캐시 저장, 복원에 사용되는 키이다.
+
 restore-keys: 내가 설정한 key로 cache miss가 발생할 때 사용할 수 있는 후보 키이다.
 
 해당 경로의 파일들은 실행 os가 변경되었을 때 다시 설정되어야 하므로 runner.os를 key에도 추가해주고 .gradle파일 혹은 gradle-wrapper.properties가 변경되었을 때도 해당 경로의 파일들이 다시 설정되어야하기 때문에 hashFiles메소드를 통해 해당 파일들로 해시값을 설정해 키로 만드는 작업이 필요하다.
