@@ -48,7 +48,7 @@
 
 ## Front-end
 * [Markdown](./WEB/FrontEnd/Markdown.md)
-* [무한 이미지 슬라이드](./WEB/FrontEnd/무한%20이미지%20슬라이드.md)
+* [무한 이미지 슬라이드](./WEB/FrontEnd/무한%20이미지%20슬라이드.md)
 * [배열의 함수형 메소드](./WEB/FrontEnd/배열의%20함수형%20메소드.md)
 * [부동소수점](./WEB/FrontEnd/부동소수점.md)
 * [크로스 브라우징](./WEB/FrontEnd/크로스%20브라우징.md)
