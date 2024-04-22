@@ -328,39 +328,39 @@ const sayHello1: = function(): void {
 
 Never
 -----
-
+```js
 const nev: [] = []
 //const nev: [Never] = []
+```
 
 이렇게 아무 타입을 넣어주지 않으면 Never라는 타입이 들어간다. Never타입은 아무값이 들어갈 수 없는 타입이다.
 
 Union
 -------
 유니온은 타입이 두가지 이상 올 때 사용할 수 있다.
-
+```js
 let union: string | number
-
+```
 Interscetion
 -----
 
 위에서 봤던 인터페이스의 내용을 보면
 
 ```javascript
-
-```
-
 const test: User & Validation = {
   name: 'jun',
   age: 25,
   isValid: true
 }
+```
+
 
 이렇게 사용할 수 있다. 
 
 
 ## 타입 추론
 
-위에서 타입을 매번 지정해줬는데 귀찮다고 느낄수도 있다. 이를 위해 타입스크립트는 타입 추론을 제공한다. 그래서 매번 타입을 지정할 필요 없이 필요한 곳에서만(컴퓨터가 추론하기 힘든부분) 타입을 지정해서 쓸 수 있다.
+ 위에서 타입을 매번 지정해줬는데 귀찮다고 느낄수도 있다. 이를 위해 타입스크립트는 타입 추론을 제공한다. 그래서 매번 타입을 지정할 필요 없이 필요한 곳에서만(컴퓨터가 추론하기 힘든부분) 타입을 지정해서 쓸 수 있다.
 
 ```javascript
 let num = 12
@@ -377,17 +377,17 @@ num = 'Hello world' // 할당 불가
 
 ## Assertion
 
-단언 - 주하지 않고 딱 잘라 말함.
+> **단언** - 추론하지 않고 딱 잘라 말함.
 
 타입스크립트에서의 Assertion의 의미도 다르지 않다.
-
+```js
 const el = document.querySelector("body");
-
+```
 이렇게 선언한다면 el은 HTMLBodyElement 이거나 null일 수 있다는 문구가 나온다.
 
 만에하나 html 코드에 body가 없다면 쿼리 선택자는 요소를 찾지 못할 수 도 있다. 그러나 일반적인 html코드는 body를 반드시 포함한다.
 
-타입스크립트의 입장에선 해당 요소가 있음을 확신할 수 없다.
+하지만 타입스크립트의 입장에선 해당 요소가 있음을 확신할 수 없다.
 
 이럴 때 사용하는 것이 Assertion이다.
 
