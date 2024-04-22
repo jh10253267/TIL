@@ -37,6 +37,7 @@ public class Chef {
 
 ```java
 public class Chef {
+  private Pizza pizza;
   private Pasta pasta;
 
   public void cook() {
