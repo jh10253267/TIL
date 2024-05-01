@@ -34,11 +34,13 @@ items = 'zero one two three'.split()
 
 print(items)
 
+# ['zero', 'one', 'two', 'three']
+
 example = 'python,jquery,javascript'
 
 print(example.split(","))
 
-['python', 'jquery', 'javascript']
+# ['python', 'jquery', 'javascript']
 
 # 리스트에 있는 각 값을 a,b,c,변수로 unpacking
 
@@ -119,7 +121,7 @@ for i in stuff:
 
 ## Enumerate & Zip
 
-Enumberate리스트의 각 요소들을 추출할 때 인덱스도 같이 추출한다.
+Enumberate는 리스트의 각 요소들을 추출할 때 인덱스도 같이 추출한다.
 
 Zip은 두 개의 List값을 병렬적으로 추출한다.
 
@@ -135,7 +137,76 @@ list(enumerate(mylist))
 
 # 문장을 List로 만들고 list의 index와 값을 unpacking하여 dict로 저장
 {i:j for i, j enumerate('python is easy peasy, lemon squeezy'.split())}
-
 ```
+
+## Lambda & MapReduce
+
+람다 함수란 함수 이름 없이 함수처럼 사용할 수 있는 익명핫무를 말한다.
+
+수학의 람다 대수에서 유래했다.
+
+일반적인 함수라면 다음과 같다.
+```python
+def f(x, y):
+  return x + y
+print(f(1, 4))
+```
+
+만약 람다 함수를 사용한다면 다음과 같다.
+
+```python
+f = lambda x, y: x + y
+print(f(1, 4))
+```
+
+Map이란 시퀀스형 자료형 각 요소에 동일한 동작을 수행하는 함수이다.
+
+예를 들어 다음과 같은 리스트에서 map함수를 사용하면 이렇다.
+```python
+ex = [1, 2, 3, 4, 5]
+f = lambda x: x ** 2
+print(list(map(f, ex)))
+```
+
+f함수가 각 엘리먼트를 돌며 ** 2 연산을 수행한다.
+
+따라서 `[1, 4, 9, 16, 25]`가 출력된다.
+
+만약 map만 사용해서 출력하려고 한다면 메모리 주소값이 출력되니 결과를 출력하기 원한다면 `list()`로 감싸주어야 한다.
+
+```python
+ex = [1, 2, 3, 4, 5]
+f = lambda x, y: x + y
+print(list(map(f, ex, ex)))
+```
+
+위와 같이 사용한다면 zip을 사용하는 것과 같은 효과를 낸다.
+
+Reduce란 map과 달리 list에 똑같은 함수를 적용해서 통합하는 것이다.
+
+다른 프로그래밍언어, 예를 들어 자바스크립트의 reduce와 같은 개념이다.
+
+```python
+from functools import reduce
+print(reduce(lambda x, y: x + y, [1, 2, 3, 4, 5]))
+# 15
+```
+
+x에는 이전 값이 들어가고 y에는 현재 값이 들어가서 15라는 값은 1+2+3+4+5가 되어 15가 출력된다.
+
+이를 이용해서 팩토리얼을 구해보면 이렇다.
+
+```python
+def factorial(n):
+  return reduce(
+    lambda x, y: x*y, range(1, n+1)
+  )
+
+factorial(5) # 120
+```
+
+그러나 코드의 직관성이 떨어져서 잘 쓰이지 않는다.
+
+
 
 
