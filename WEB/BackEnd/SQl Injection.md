@@ -6,7 +6,7 @@
 
 ## 어떻게 가능한 걸까?
 
-![sql injection](https://i.namu.wiki/i/mr1k7V_g-GIshsO3KoatD8A_BiR4lA8S9p7PU35T4cCkvQ-tVdx6YZtiKrWfwkWyXSbbiOugKs-QZ-xpfOV4pLAGVzQR5MCJC_jlUjBTC3UZ2ld0OgeUpTi1M1nze6ndP2R_0Qfu_5LMB7B42eJ2kg.webp)
+![sql injection](../sqlinjection.webp)
 
 재밌는 만화
 
