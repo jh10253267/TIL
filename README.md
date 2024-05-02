@@ -32,6 +32,7 @@
 * [SQL Injection](./WEB/BackEnd/SQl%20Injection.md)
 * [API Test Tool](./WEB/BackEnd/APITestTool.md)
 * [JWT 인증](./WEB/BackEnd/JWT%20인증.md)
+* [JPA](./WEB/BackEnd/JPA.md)
 * [System.out.println을 사용하면 안되는 이유](./WEB/BackEnd/System.out.println을%20쓰면%20안되는%20이유.md)
 * [Lombok](./WEB/BackEnd/Lombok.md)
 * [Interceptor](./WEB/BackEnd/Interceptor.md)
