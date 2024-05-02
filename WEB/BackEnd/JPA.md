@@ -153,7 +153,7 @@ public class Comment {
 
 생성된 테이블에는 Comment에 FK인 post_id가 있지만 정작 엔티티 클래스에는 post_id가 없고 오히려 이 FK를 Post에서 관리한다.
 
-이런 상황에서 Comment를 수정하게 된다면 정작 쿼리는 Comment에서 나가게 된다.
+이런 상황에서 Comment를 수정하게 된다면 정작 쿼리는 Post에서 나가게 된다.
 
 이렇게 되면 엔티티와 DB간의 관계가 명확하지 않게된다.
 
@@ -292,6 +292,75 @@ private Set<Comment> commentSet = new HashSet<>();
 ```
 
 이렇게 하면 댓글이 연관관계의 주인이므로 매핑 테이블이 사라지고 @ManyToOne의 구조처럼 테이블이 생성된다.
+
+
+### N+1 문제
+
+JPA에서 굉장히 유명한 문제가 있는데 바로 N+1문제이다.
+
+OneToMany 방식은 자신의 하위에 여러 하위 엔티티를 가진다.
+
+이러한 상황에서 게시글의 목록을 읽어오면 문제가 생긴다.
+
+목록을 가져오는 쿼리 한 번(1)과 하나의 게시글마다 댓글을 읽어오는 쿼리(N)가 실행된다.  
+따라서 굉장히 많은 양의 쿼리가 발생하게된다.
+
+이 문제에 대한 가장 간단한 해결책은 @BatchSize를 이용하는 것이다. 이는 N번의 쿼리를 모아하 한 번에 실행하는 size를 지정하는 애노테이션이다.
+
+이렇게 작성한 뒤 실행시켜보면 이전의 결과와는 다른 것을 확인할 수 있다.
+
+댓글을 조회할 때 한 번에 In조건으로 사용되어 조건의 범위를 지정하거나 지정된 값 중에서 하나 이상과 일치하면 조건에 맞는 것으로 판단하게 한다.
+
+### @EntityGraph
+
+로딩이란 하나의 엔티티를 조회할 때 연관되어있는 엔티티들을 어떻게 가져올 것이냐를 말한다.
+
+JPA에선 객체와 필드를 보고 쿼리를 생성하는데 다른 객체가 필드로 명시되어있으면 그 객체들까지 조회한다. 
+
+가장 간단한 방법은 즉시(eager)로딩을 적용하는 것이지만 성능적인 이슈가 생길 수 있다.
+
+일반적으로는 지연(lazy)로딩을 사용하는데 이는 필요한 시점에 연관된 객체의 데이터를 불러오는 것이다.
+
+@OneToMany의 경우 기본적으로 지연 로딩을 한다.
+
+게시물을 조회하는 경우 Post객체와 Comment객체들을 생성해야하므로 2번의 SELECT가 수행된다.
+
+테스트 메소드를 작성해서 확인해보면
+```java
+Optional<Post> result = postRepository.findById(1L);
+
+Post post = result.orElseThrow();
+
+log.info(post);
+log.info(post.getCommentSet());
+```
+
+post를 출력하고 다시 select를 실행하려고 했을 때 데이터베이스의 연결이 이미 끝난 상태이다. 따라서 "no session"이라는 메시지가 뜬다.
+
+이를 해결하려면 @Transactional을 명시해줄 수 있다.
+
+그러나 지연로딩을 사용하면서도 한 번에 조인 처리를 해서 SELECT가 이루어지도록 하는 방법이 있는데 바로 @EntityGraph를 사용하는 것이다.
+```java
+@EntityGraph(attributePaths = {"commentSet"})
+@Query("select p from Post p where p.id = :postId")
+Optional<Post> findByIdWithComments(Long postId);
+```
+
+이렇게 작성하고 테스트 메소드를 실행해보면...
+```java
+Optional<Post> result = postRepository.findById(1L);
+
+Post post = result.orElseThrow();
+
+log.info(post);
+for (Comment comment : post.getCommentSet()) {
+  log.info(comment);
+}
+```
+
+실행 결과를 보면 post테이블과 comment 테이블의 조인처리가 된 상태로 select가 실행되면서 post엔티티와 comment엔티티를 한 번에 처리할 수 있게 되었다.
+
+이처럼 @OneToMany를 사용할 때의 장점중 하나가 바로 이러한 하위 엔티티의 처리라고 할 수 있다.
 
 ### 영속성의 전이
 
