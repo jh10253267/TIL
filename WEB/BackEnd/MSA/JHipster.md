@@ -178,5 +178,8 @@ jhipster entity 등록할 엔티티 이름
 
 JHipster에서 더미데이터를 생성해주고 CRUD작업이 가능한 상태로 제공해준다.
 
+<img width="396" alt="스크린샷 2024-05-12 시간: 22 14 51" src="https://github.com/jh10253267/TIL/assets/108499717/8b699321-d839-4422-adb8-fc24cf8a8626">
+
+
 이렇게 해서 MSA 아키텍쳐를 구성할 수 있다.
 
