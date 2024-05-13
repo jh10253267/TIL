@@ -2,7 +2,7 @@
 
 ## 개요
 
-MSA에 대해 공부하고 있지만 아키텍쳐를 어떻게 구성하고 연결할까?
+어떻게 MSA의 아키텍쳐를 구성하고 연결할 수 있을까?
 
 **JHipster**는 **J**ava **Hipster**로 웹 애플리케이션과 마이크로서비스 아키텍쳐를 빠르게 적용, 개발, 배포할 수 있도록 도와주는 오픈소스 개발 플랫폼이다.
 
@@ -70,7 +70,6 @@ JHipster
 ? Would you like to enable internationalization support? Yes
 ? Please choose the native language of the application Korean
 ? Please choose additional languages to install 
-
 ```
 
 위에서 원하는 옵션을 선택하고 엔터를 누르다보면 지정한 디렉터리에 프로젝트가 생성되는 것을 볼 수 있다.
