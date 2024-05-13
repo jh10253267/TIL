@@ -155,10 +155,9 @@ gateway-jhipster-registry-1  | -------------------------------------------------
 ```bash
 jhipster entity 엔티티이름
 ```
-
-이번에는 JHipster Online을 통해서 생성하는 방법을 알아보자.
-
-[](https://start.jhipster.tech/)  
+ 
+이번에는 JHipster Online을 통해서 생성하는 방법을 알아보자.  
+[JHipster Online](https://start.jhipster.tech/)  
 위의 링크에 들어가서 왼쪽 하단의 JDL Stdio를 클릭하여 마치 ERD를 짜듯이 작성해주면 된다.
 
 그런 다음 오른쪽 상단의 다운받기 버튼을 클릭하면 `jhipster-jdl.jdl`파일이 다운받아진다. 이 것을 마이크로 서비스 디렉토리의 내부에 옮긴 뒤 
@@ -169,6 +168,8 @@ jhipster entity 엔티티이름
 cd 게이트웨이
 jhipster entity 등록할 엔티티 이름
 ```
+
+(만일 생성한 엔티티가 4개라면 jhipster entity 명령어를 4번 실행시켜 주는 것이다.)
 
 이렇게 하고 백엔드 서비스를 다시 실행해준다.
 
