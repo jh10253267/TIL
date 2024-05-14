@@ -142,7 +142,7 @@ INSERT INTO 테이블명(속성명) VALUES(값)
 		return insertAction.execute(params);
 	}
  ```
- ```SimpleJdbcInsert```를 활용하면 직접 INSERT 구문을 쓰지 않고도 DB에 데이터를 저장할 수 있다. DB 컬럼명과 객체의 속성명이 일치한다면 아래와 같은 단순한 코드로 DB에 데이터 1건을 입력할 수 있다.
+ ```SimpleJdbcInsert```를 활용하면 직접 INSERT 쿼리를 작성하지 않고도 DB에 데이터를 저장할 수 있다. DB 컬럼명과 객체의 속성명이 일치한다면 아래와 같은 단순한 코드로 DB에 데이터 1건을 입력할 수 있다.
 
  만약 데이터베이스에 입력이 완료된 후 그 PK값을 받아서 사용해야하는 경우가 있을 수 있다. 그럴 때엔 `insertAction.executeAndReturnKey(param)`메소드를 사용하면 PK값을 받아올 수 있다.
 
