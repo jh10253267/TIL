@@ -28,7 +28,6 @@
 		
 		try (Connection conn = DriverManager.getConnection(dburl, dbuser, dbpw); 
 				PreparedStatement ps = conn.prepareStatement(sql)){
-			
 			ps.setString(1, dto.getTitle());
 			ps.setString(2, dto.getName());
 			ps.setInt(3, dto.getSequence());
