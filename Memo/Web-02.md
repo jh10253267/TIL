@@ -124,10 +124,11 @@ Spring JDBC는 모든 저수준 세부사항을 스프링 프레임워크가 처
 * <b>RowMapper</b><br>
  	ResultSet에서 원하는 객체로 타입을 변환하는 역할을 한다.
 * <b>BeanPropertyRowMapper</b><br>
- 기존의 JDBC에서 ```ResultSet```를 사용해 원하는 자료형으로 데이터를 받고 DTO의 setter를 이용해 정보를 넣어줬다. ```RowMapper```를 사용하면 자바의 클래스로 바로 받을 수 있다.
- SQL과 자바는 네이밍 컨벤션이 다르다. SQL은 단어와 단어 사이를 ```_``` 로 연결하는 반면 자바의 클래스는 단어와 단어를 시작하는 단어의 첫 알파벳을 대문자로 설정하는데 ```RowMapper```는 이런 부분을 자동으로 변환해준다.
+ 기존의 JDBC에서 `ResultSet`를 사용해 원하는 자료형으로 데이터를 받고 DTO의 setter를 이용해 정보를 넣어줬다. `RowMapper`를 사용하면 자바의 클래스로 바로 받을 수 있다.
+ SQL과 자바는 네이밍 컨벤션이 다르다. SQL은 단어와 단어 사이를 `_` 로 연결하는 반면 자바의 클래스는 단어와 단어를 시작하는 단어의 첫 알파벳을 대문자로 설정하는데 `RowMapper`는 이런 부분을 자동으로 변환해준다.
 * <b>SqlParameterSource</b><br>
-	쿼리의 파라미터를 지정
+	직접 플레이스 홀더와 값을 입력해주지 않더라도 쿼리의 파라미터를 지정해줄 수 있다.  
+	자바 객체의 필드명과 값을 읽어와서 파라미터 맵을 생성한다.
 * <b>SimpleJdbcInsert</b><br>
 
 ```sql
@@ -144,5 +145,18 @@ INSERT INTO 테이블명(속성명) VALUES(값)
  ```
  ```SimpleJdbcInsert```를 활용하면 직접 INSERT 쿼리를 작성하지 않고도 DB에 데이터를 저장할 수 있다. DB 컬럼명과 객체의 속성명이 일치한다면 아래와 같은 단순한 코드로 DB에 데이터 1건을 입력할 수 있다.
 
- 만약 데이터베이스에 입력이 완료된 후 그 PK값을 받아서 사용해야하는 경우가 있을 수 있다. 그럴 때엔 `insertAction.executeAndReturnKey(param)`메소드를 사용하면 PK값을 받아올 수 있다.
+ 때론 데이터베이스에 입력이 완료된 후 그 PK값을 받아서 사용해야하는 경우가 있을 수 있다. 그럴 때엔 `insertAction.executeAndReturnKey(param)`메소드를 사용하면 PK값을 받아올 수 있다.
 
+만약 직접 쿼리를 작성해서 insert하고싶은 경우가 있을 수 있다.  
+자바의 객체에 createdAt필드가 있어서 LocalDateTime.now()와 같이 현재 시각을 구한 뒤 이를 넣어주면 SimpleJdbcInsert로도 충분하다. 그러나 요청이 처리되었다는 것은 DB에 기록이 되었다는 의미이므로 애플리케이션 서버에서 이를 정해주는 것 보다는 DB에 입력된 시각을 createdAt으로 보는 것이 좀 더 리즈너블하다.
+
+따라서 이런 경우 DB의 `NOW()`함수를 사용하여 기록할 수 있다.
+
+이렇게 되면 직접 쿼리를 작성해주어야하는데 `executeAndReturnKey`와 같이 테이블에 입력하고 키를 리턴받는 방법은 `KeyHolder keyHolder = new GeneratedKeyHolder();`를 사용하는 것이다.
+
+```java
+jdbc.update(쿼리, params, keyHolder);
+return keyHolder.getKey().intValue();
+```
+
+이렇게 하면 DB에 저장된 키 값을 사용할 수 있다.
