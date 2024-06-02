@@ -24,11 +24,30 @@ Redis는 인메모리 데이터베이스로 다양한 command를 제공하고있
 
 여러 인스턴스가 하나의 데이터를 공유할 수 있다는 장점이 있고 로컬 캐싱보다 느리다는 단점이 있다. 그래도 일반적인 MySQL보다는 빠르다.
 
+## Redis 구조
+
+Redis는 크게 4가지 구조로 구분할 수 있다.
+
+1. Stand Alone
+2. Master-Replica
+3. Sentinel
+4. Cluster
+
+Stand Alnone은 한 대의 인스턴스로 구성하는 방법이고 Master-Replica는 Master의 싱크를 Replica가 따라가는 방법이다.
+
+Sentinel은 일반적인 Master-Replica 구조에서 Master가 내려가면 별다른 조치를 취하지 않지만 Sentinel의 경우 Master가 내려간 경우 Replica가 Master로 전환되고 그 시간동안 Master가 복구시키고 이 것을 Replica로 전환시킨다.
+
+Cluster는 Master-Replica가 여러대가 있는 구조로 Master에 장애가 생긴 경우 Replica가 자동으로 Master로 전환되며 샤딩이라고 하는 분할이 일어난다.
+
+## Redis VS MemCached
+일반적으로 Redissms MemCached의 기능의 대부분을 포함하고 있다.
+
 ## Redis의 특징
 
-인메모리라는 뜻은 휘발성이라는 의미이다. 사실 캐싱된 데이터는 원본이 있는 데이터라서 큰 문제는 없겠지만 캐싱하여 관리하는 데이터가 많을 경우에 한 번에 다시 불러와 캐싱을 한다면 순간적으로 DB I/O가 증가할 수 있는 문제가 있다.
+인메모리라는 뜻은 휘발성이라는 의미이다.  
+사실 캐싱된 데이터는 원본이 있는 데이터라서 큰 문제는 없겠지만 캐싱하여 관리하는 데이터가 많을 경우에 한 번에 다시 불러와 캐싱을 한다면 순간적으로 DB I/O가 증가할 수 있는 문제가 있다.
 
-Redis의 속도가 빠르기때문에 Redis를 메인으로 사용하는 경우도 있다고 한다. 그러나 이런 경우 데이터 유실문제가 있기 때문에 Sentinel이라는 방법을 사용해서 여러개의 Redis인스턴스를 구성하고 이를 하나처럼 사용하는 것이다. 
+Redis의 속도가 빠르기때문에 Redis를 메인으로 사용하는 경우도 있다고 한다. 그러나 이런 경우 데이터 유실문제가 있기 때문에 Sentinel구조를 사용해서 여러개의 Redis인스턴스를 구성하고 이를 하나처럼 사용하는 것이다. 
 
 Redis의 장점중에 하나가 다양한 command를 지원한다는 것인데 이는 공식 사이트에가면 볼 수 있다.
 
