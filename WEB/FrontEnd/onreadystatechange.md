@@ -2,7 +2,7 @@
 
 ## 개요
 
-(이 메소드는 왜 카멜케이스가 적용이 안되어있을까 잘못 적은 것 같은 느낌에 불편하다.)
+(이 메소드는 왜 카멜케이스가 적용이 안되어있을까? 잘못 적은 것 같은 느낌에 불편하다.)
 
 이 메소드는 XMLHttpRequest 객체의 현재 상태를 나타낸다.
 
@@ -18,6 +18,7 @@ function sendAjax(url) {
   oReq.send() 
 }
 ```
+`onreadystatechange`를 이용하면 보다 디테일하게 작성할 수 있다.
 
 ## onreadystatechange 프로퍼티
 
@@ -25,10 +26,11 @@ onreadystatechange 프로퍼티는 XMLHttpRequest 객체의 readyState 프로퍼
 
 
 readyState의 값은 다음과 같다.
+```
 0 : XMLHttpRequest 객체가 생성됨.
 1 : 서버와 연결됨.
 2 : 요청 수신
 3 : 요청한 데이터를 처리중.
 4 : 요청이 보내졌고 응답할 준비가 완료됨.
-
+```
  이를 이용하면 서버로부터 응답이 도착하는 순간을 특정할 수 있다.
