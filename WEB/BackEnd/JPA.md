@@ -17,41 +17,7 @@ DB 테이블 설계는 PK를 가진 테이블을 먼저 설계하고 이 PK를 F
 
 이렇게 하면 PK를 가진 테이블에서 시작해서 FK를 갖는 테이블로 갈 수 있고 FK를 가진 테이블에서 PK를 가진 테이블로 갈 수 있다.
 
-왼쪽 테이블을 기준으로 join을 해도, 오른쪽 테이블을 기준으로 join을 해도 조회가 가능하고 동일한 결과가 나온다.
-
-이게 DB의 방식이다. 방향성이 없다고도 말한다.
-
-그러나 자바의 방식은 조금 다르다.
-
-게시글이 댓글을 참조할 수도 있고 댓글이 게시글을 참조할 수도 있고 게시글이 댓글을 참조하고 댓글이 게시글을 참조하는 것도 가능하다.
-
-고전적인 JDBC를 이용해서 DB를 사용하려면 쿼리문의 결과를 자바의 객체로 값을 셋팅해준다.
-
-dto은 다음과 같이 생성한다.
-```java
-@Data
-public class Post {
-  private String title;
-  private String content;
-	private List<Comment> comments;
-}
-```
-게시글과 코멘트를 같은 id값으로 즉, post의 id가 1인 정보를 조회해서 게시글에 대한 정보를 조회하고 추가적으로 fk를 이용해 댓글에 대한 정보를 조회한다. 
-
-쿼리를 날린다면 다음과 같다.
-```sql
-SELECT * FROM POST WHERE ID = 1;
-SELECT * FROM COMMENT WHERE POST_ID = 1;
-```
-
-이렇게 받아온 정보들을 dto안에 넣어준다. post.set(...);
-
-이러한 방식은 DB의 방식에 맞춘 방식이다. 자바 애플리케이션과 데이터베이스를 완전히 다른 서버로 보는 관점.
-
-그러나 자바만 따로 놓고 보면 Post 안에 Comment를 넣고 자신에게 달린 댓글을 관리할 수도 있고 comment에서 post를 필드로 갖게 하고 관리할 수도 있다.
-
-즉, 여러가지의 방법이 존재한다. (DB에서는 어느 곳에서 접근해도 상관없고 동일한 결과를 리턴한다.)
-
+예를 들어 게시글과 댓글이 있다고 해보자.
 ```sql
 --왼쪽 테이블인 post를 기준으로 join
 SELECT post.id, post.title, post.content, comment.id AS comment_id, comment.content AS comment_contnet FROM post JOIN comment ON post.id = comment.post_id; 
@@ -60,37 +26,43 @@ SELECT post.id, post.title, post.content, comment.id AS comment_id, comment.cont
 SELECT post.id, post.title, post.content, comment.id AS comment_id, comment.content AS comment_contnet FROM comment JOIN POST ON comment.post_id = post.id;
 ```
 
-자바에선 새로운 코멘트가 달렸다면 이렇게 할 수 있다.
+왼쪽 테이블을 기준으로 join을 해도, 오른쪽 테이블을 기준으로 join을 해도 조회가 가능하고 동일한 결과가 나온다.
+
+이게 DB의 방식이다. 방향성이 없다고도 말한다.
+
+그러나 자바의 방식은 조금 다르다.
+
+게시글이 댓글을 참조할 수도 있고 댓글이 게시글을 참조할 수도 있고 게시글이 댓글을 참조하고 댓글이 게시글을 참조하는 것도 가능하다.
+
+게시글이 댓글을 참조하는 방식으로 댓글은 게시글의 존재를 모르고 댓글에서 게시글로의 접근이 불가능하다.
+
+이렇게 연관관계를 설정하는 것이 바로 `@OneToMany`이다.
 ```java
 @Data
 public class Post {
-  private Long postId;
   private String title;
   private String content;
-  private List<Comment> comments;
+	private List<Comment> comments;
 }
 ```
+댓글이 게시글을 참조하는 방식으로 게시글은 댓글의 존재를 모르고 게시글에서 댓글로의 접근이 불가능하다.
 
-```java
-post.getComments().add(new Comment(...));
-```
-
-이렇게 연관관계를 설정하는 것이 바로 `@OneToMany`이다.
-
-자바의 객체로 본다면 post에서 comment 방향으로 접근하지만 comment에서 Post로는 접근할 수 없다.(comment는 post의 존재를 모른다.)
-
-이번엔 게시글과 댓글의 관게를 댓글의 관점에서 본다면 이렇다.
-
+이런 방식이 바로 `ManyToOne`이다.
 ```java
 @Data
-public class Comments {
+public class Comment {
   private Long commentId;
   private String content;
   private Post post;
 }
 ```
+이 둘을 조합하여 서로가 서로를 참조하는 방식으로 구성할 수도 있다.(양방향 연관관계)
 
-1번 게시글에 새로운 댓글이 달렸다면 이렇게 관리할 수 있을 것이다.
+즉, 여러가지의 방법이 존재한다. (앞에서 봤던 것처럼 DB에서는 어느 곳에서 접근해도 상관없고 동일한 결과를 리턴한다.)
+
+이번엔 게시글과 댓글의 관게를 댓글의 관점에서 본다면 이렇다.
+
+ManyToOne에서 1번 게시글에 새로운 댓글이 달렸다면 이렇게 관리할 수 있을 것이다.
 ```java
 Post post = findPost(1L);
 Comment comment = new Comment();
@@ -98,14 +70,6 @@ comment.setCommentId(1L);
 comment.setContent("comment content");
 comment.setPost(post);
 ```
-
-이렇게 설정하는 것이 바로 `@ManyToOne`이다.
-
-이렇게 한다면 post는 comment의 존재를 모른다. post에서 comment의 접근은 불가능하고 comment에서 Post에 접근하는 방식이다.
-
-아니면 두 방식을 조합해서 관리할 수도 있을 것이다.
-
-두 방식을 조합해서 관리하는 방식을 양방향 관계라고 한다.
 
 여기서 DB와 객체지향 간의 패러다임의 불일치가 생긴다.
 
@@ -118,10 +82,8 @@ comment.setPost(post);
 ORM을 통해 자바의 객체를 이용해서 프로그램을 작성하듯이 DB를 사용할 수 있는 것이다.
 이 덕분에 우리는 DB에 대해 전혀 이해하지 못하고 있더라도 DB를 이용한 웹 서비스를 개발할 수 있다.
 
-반복되고 무의미한 작업들(반복되는 쿼리 작성, 단순한 쿼리 작업)을 ORM(우리에게는 JPA)에게 맡기는 것이다.
+반복되고 무의미한 작업들(반복되는 쿼리 작성, 단순한 쿼리 작업)을 ORM(우리에게는 JPA)에게 맡길 수 있다.
 (Spring JDBC의 SimpleJdbcInsert를 보면 이러한 고민의 흔적이 보인다.)
-
-만약 post테이블의 pk를 comment테이블에서 fk로 사용하고 있다면 개발자가 직접 join쿼리를 이용하는 것이 아니라 `post.getComments();`와 같이 작성하면 JPA에서 알아서 join쿼리 작성하고 수행한다.
 
 일반적으론 FK를 기준으로, 변화가 많은 쪽을 선택하여 연관관계를 설정해주는데 게시글과 댓글로 본다면 댓글에서 @ManyToOne으로 단방향 연관관계를 설정해주는 식이다.(단방향 연관관계란 두 개의 클래스에서 오직 하나만 다른 하나의 클래스의 존재를 알고있다는 의미이다.)
 
@@ -166,11 +128,6 @@ public class Comment {
 
 이렇게 되면 엔티티와 DB간의 관계가 명확하지 않게된다.
 
-그리고 객체지향 시스템을 RDB에 매핑시키는 것이 ORM의 목적이므로 객체지향의 관점에서 봐보자. Post와 Comment가 엔티티가 아닌 일반 자바 클래스라고 해보자.
-
-1. Post 클래스가 Comment를 관리하는 것이 주된 책임이라면 댓글리스트를 가지는 것이 더 적절할 것이고 Comment 클래스가 댓글 하나의 정보를 관리하는 것이 주된 책임이라면 Post에 대한 참조를 갖는 것이 더 적절하다.
-2. 다중성이 적은 방향을 선택하는 것이 바람직하다. 자신의 컬렉션 필드를 관리하는 노력이 필요하기 때문이다.
-
 이런 이유로 @OneToMany를 사용하여 단방향 연관관계를 맺는 것 보다 @ManyToOne을 사용하여 단방향 연관관계를 맺는 것이 좋다.
 
 그러나 이렇게 하면 댓글의 관점에서의 해석이기 때문에 post에서는 comment의 존재를 모른다.
@@ -202,7 +159,7 @@ JPA를 이용한 개발의 핵심은 객체지향을 통해서 영속계층을 �
 여기서 엔티티 객체란 DB로 따지면 테이블의 한 행이다.  
 Java로 따지면 PK를(고유한 번호를) 가지는 객체이다.
 
-엔티티 클래스를 생성한다. -> 테이블을 생성한다가 되는 것이다.
+엔티티 클래스를 정의한다. -> 테이블을 생성한다가 되는 것이다.
 
 엔티티 인스턴스를 만든다 -> DB의 새로운 한 행이 되는 것이다.
 
