@@ -80,7 +80,7 @@ VS코드에서 ES7+ 플러그인을 설치하면 사용할 수 있다.
 
 ```js
 export default class Board extends Component {
-  renderSqure() {
+  renderSqure(i) {
     return <Sqaure />;
   }
   render() {
@@ -108,3 +108,91 @@ export default class Board extends Component {
   }
 }
 ```
+
+## Props
+
+Props는 Properties로 부모 컴포넌트로부터 자녀 컴포넌트로 데이터등을 전달하는 방법이다.
+
+이는 읽기 전용으로 자녀 컴포넌트 입장에서는 변하지 않는다.
+
+틱텍토 앱에서는 Props를 이용해서 Board컴포넌트에서 Square컴포넌트로 데이터를 전달할 수 있다.
+
+```js
+renderSqure(i) {
+    return <Sqaure value={i} />;
+  }
+```
+
+```js
+export default class Square extends React.Component {
+
+  render() {
+    return (
+      <button className="square">
+        { this.props.value }
+      </button>
+    )
+  }
+}
+```
+
+이렇게 사용할 수 있다.
+
+## State
+
+사용자가 칸을 클릭하면 이를 기억하게 만들어 X표시를 넣어야한다.  
+State는 컴포넌트에서 무언가를 기억하도록 할 때 사용한다.
+
+state를 사용하기 위해선 생성자를 내부에서 초기화해주어야한다.
+
+```js
+// Board component
+constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    }
+  }
+```
+
+```js
+handleClick(i) {
+    const squares = this.state.squares.slice();
+    squares[i] = 'X';
+    this.setState({ squares : squares})
+  }
+
+renderSquare(i) {
+  return <Square value={this.state.squares[i]}
+  onClick={() => this.handleClick(i)}/>
+}
+```
+
+```js
+{this.renderSquare(0)}
+```
+
+각 칸을 클릭하면 onClick prop이 리엑트에게 클릭 이벤트 리스너를 설정하라고 알려주고 버튼을 클릭하면 리엑트는 Squre의 render()함수에 정의된 onClick이벤트 핸들러를 호출한다.
+
+이벤트 핸들러는 this.props.onClick()을 호출한다. Squre의 onClick props는 Board에 정의되어있다. Board에서 Squre로 onclick = {() => this.handelClick(i)}를 전달했기 때문에 Square를 클릭하면 Board의 handleClick(i)를 호출한다.
+
+## 리엑트 불변성 지키기
+
+불변성이란 값이나 상태를 변경할 수 없는 성질을 말한다.
+
+자바스크립트는 원시 타입과 참조 타입이 있다.
+
+원시 타입으로는 Boolean, String, Number, null등이 있고 참조 타입으로는 Object, Array가 있다.
+
+참조 타입의 경우 힙 공간을 사용하고 콜 스택은 개체 및 배열 값이 아닌 메모리에만 힙 메모리 참조 id를 값으로 저장한다.
+
+예를 들어 원시 타입에서 이런식으로 코드를 작성한다면
+```js
+let username = 'walter';
+username = 'john';
+```
+
+username walter를 john으로 대체한 것이 아니라 메모리공간에 있는 walter라는 값을 그대로 두고 다른 메모리 공간에 john을 새롭게 할당한 것이다.
+
+반면 참조타입의 경우 배열에 요소를 추가하거나 객체의 속성 값을 변경할 때 콜 스택의 참조 id는 동일하게 유지되고 힙 메모리에서만 변경된다.
+
