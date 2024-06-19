@@ -54,8 +54,7 @@ class 자동차 {
 }
 ```
 
-![이미지1](https://cphinf.pstatic.net/mooc/20181218_284/1545136782491NSgAa_JPEG/3.7.2-1.jpg?type=w760)
-
+![3 7 2-1](https://github.com/jh10253267/TIL/assets/108499717/2ce08a2d-de83-4561-9116-aa16fc214bdb)
 
 <b>DI가 적용된 예</b><br><br>
 컨테이너가 변수에 인스턴스를 할당해주고 있다.<br>
@@ -75,11 +74,12 @@ class 자동차 {
 ```
 
 
-![이미지2](https://cphinf.pstatic.net/mooc/20181218_190/1545137156742y8WiS_JPEG/3.7.2-2.jpg?type=w760)
+![3 7 2-2](https://github.com/jh10253267/TIL/assets/108499717/70cf6d8f-c511-435c-9f72-9337845afcd8)
 
 
 
 ### IoC(Inversion of Control) 
+
 컨테이너가 코드 대신 오브젝트의 제어권을 갖고 있어 IoC(제어의 역전)이라 한다.
 
 예를 들어, 서블릿 클래스는 개발자가 만들지만, 그 서블릿의 메소드를 알맞게 호출하는 것은 WAS이다.
@@ -87,6 +87,7 @@ class 자동차 {
 이렇게 개발자가 만든 어떤 클래스나 메소드를 다른 프로그램이 대신 실행해주는 것을 제어의 역전이라고 한다.
 
 ### ApplicationContext와 Bean
+
 스프링에서는 빈이라고 부르는 객체들을 관리하기 위해서 ApplicationContext를 사용한다. 빈이 등록되면 해당 공간 안에서 객체를 생성하고 관리하기 시작한다.
 
 자체적으로 객체를 생성하고 관리하면서 필요한 곳으로 객체를 주입해주는데 이 때 관련된 정보는 XML파일을 생성해서
@@ -110,7 +111,7 @@ class 자동차 {
  * 기본 생성자를 가진다.(내부적으로 Reflection을 사용하기 때문)
  <br>
 
- [di 관련 실습 레포지토리](https://github.com/jh10253267/di-practice)
+ [di 실습 레포지토리](https://github.com/jh10253267/di-practice)
 
  <br><br>
 
@@ -195,6 +196,7 @@ Car 생성자
 엔진이 동작합니다.
 ```
 ### Java Config를 이용한 설정
+
 위에서 알아본 설정 방법은 스프링의 설정 방법중 XML을 이용한 설정이였고 이제 Java Config를 이용한 설정을 알아보려한다.
 
 우선 알기 쉽게 위에서 살펴본 코드를 Java Config방식으로 바꾸면 다음과 같다.
@@ -317,3 +319,156 @@ Car 생성자
     * <b>가독성</b> : 코드가 길어지고 설정이 복잡해질 경우에는 가독성이 떨어질 수 있다.
     * <b>재배포의 어려움</b> : 설정 변경 시 코드를 다시 컴파일해야 하므로 재배포가 번거로울 수 있다.
     * <b>초기 학습 곡선</b> : XML에 비해 자바 설정 방식을 습득하는 데 시간이 필요할 수 있다.
+
+
+## Spring MVC
+
+Spring MVC는 디스패쳐 서블릿이 중요한 역할을 한다. Spring MVC를 사용하려면 우선 디스패쳐 서블릿을 프론트 컨트롤러로 등록하는 작업이 필요하다.
+
+크게 두 가지 방식으로 설정할 수 있다.
+1. web.xml
+2. WebApplicationInitializer 인터페이스 구현(자바 Config)
+3. AbstractAnnotationConfigDispatcherServletInitializer 상속(자바 Config)
+
+1번 web.xml을 사용하는 방법부터 보자면 
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app>
+
+  <display-name>Spring MVC Config</display-name>
+
+  <servlet>
+    <servlet-name>mvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextClass</param-name>
+      <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </init-param>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>kr.or.connect.mvcexam.config.WebMvcContextConfiguration</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>mvc</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+</web-app>
+```
+
+1. 사용할 디스패쳐 서블릿 설정
+```xml
+<servlet>
+    <servlet-name>mvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextClass</param-name>
+      <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+    </init-param>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>kr.or.connect.reservation.config.WebMvcContextConfiguration</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+```
+
+위의 코드에서 `servlet-class` 부분이 바로 프론트 컨트롤러로 디스패쳐 서블릿을 사용하도록 설정하는 부분이다.
+
+디스패쳐 서블릿은 스프링이 알아서 해주는 부분이지만 실제 어떤 일을 하고싶은지는 `init-param`에서 설정해준다.
+
+Spring MVC 설정도 xml 파일을 이용해서 설정할 수 있고 Java Config를 이용해서 설정할 수 있다.
+
+2. 서블릿 매핑 설정
+```xml
+<servlet-mapping>
+    <servlet-name>mvc</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+```
+어떤 경로에 어떤 서블릿이 처리할 것인가를 설정해주는 부분이다.
+
+디스패처 서블릿은 프론트 컨트롤러로 모든 요청을 처리한다. 따라서 /와 같이 설정해서 모든 요청을 처리하게 한다.
+
+서블릿은 브라우저에서 최초로 요청을 보냈을 때 init()메소드를 실행하고 메모리에 로드해서 기능을 수행한다. 그래서 최초 요청에 대해 지연이 발생할 수 있는데 `<load-on-startup>1</load-on-startup>` 코드를 통해 이를 조정할 수 있다.
+
+이 태그는 애플리케이션 시작 시점에 서블릿을 초기화하는 설정을 나타낸다.
+
+만약 값을 0 이상의 정수로 설정하면 애플리케이션 시작 시점에 서블릿이 로드되고 초기화되어 어플리케이션이 더 빠르게 응답할 수 있도록 한다. 1 이외에 다른 숫자도 사용할 수 있다. 1은 우선순위가 제일 높다는 의미로 만약 다른 서블릿의 값이 2라면 1로 설정한 서블릿이 먼저 초기화되고 다음으로 2번으로 설정한 서블릿이 초기화된다.
+
+MVC를 설정하는 두 번째 방법인 WebApplicationInitializer 인터페이스 구현 방법은 
+
+MVC 설정 자바 클래스를 만들고 위의 인터페이스를 구현한다.
+
+Spring MVC는 ServletContainerInitializer를 구현하고 있는 SpringServletContainerInitializer를 제공하고 이는 WebApplicationInitializer 구현체를 찾아 인스턴스를 만들고 해당 인스턴스의 onStartUp 메소드를 호출하여 초기화한다.
+
+```java
+public class WebAppInitializer implements WebApplicationInitializer {
+    private static final String SERVLET_NAME = "dispatcher";
+		
+    @Override
+    public void onStartup(ServletContext servletContext) throws ServletException {
+        ServletContextListener listener = new ContextLoaderListener();
+        servletContext.addListener(listener);
+
+    }
+    private void registerDispatcherServlet(ServletContext servletContext) {
+        AnnotationConfigWebApplicationContext context = createContext(WebMvcContextConfig.class);
+        ServletRegistration.Dynamic dispatcher;
+        dispatcher = servletContext.addServlet(SERVLET_NAME, new DispatcherServlet(context));
+        dispatcher.setLoadOnStartup(1);
+        dispatcher.addMapping("/");
+    }
+    private AnnotationConfigWebApplicationContext createContext(final Class<?>... annotatedClasses) {
+        AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
+        context.register(annotatedClasses);
+        return context;
+    }
+}
+```
+
+
+마지막 방법은 
+
+```java
+public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+    @Override
+    protected Class<?>[] getRootConfigClasses() {
+        return new Class<?>[]{ApplicationConfig.class, SecurityConfig.class};
+    }
+
+    @Override
+    protected Class<?>[] getServletConfigClasses() {
+        return new Class<?>[]{WebMvcContextConfig.class};
+    }
+
+    @Override
+    protected String[] getServletMappings() {
+        return new String[]{"/"};
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
+        encodingFilter.setEncoding("UTF-8");
+
+        return new Filter[]{encodingFilter};
+    }
+}
+```
+
+이렇게 오버라이드된 메소드의 이름을 보면 xml설정의 어떤 부분이 대체되는지 짐작할 수 있다.
+
+우선 `getServletConfigClasses`메소드는 Spring MVC 설정을 위한 클래스를 지정하는 부분이다.
+
+`getServletMappings`메소드는 디스패처 서블릿이 처리할 경로를 설정하는 부분이다..
+
+`getRootConfigClasses`메소드는 프로젝트에서 사용할 빈의 설정을 위한 클래스를 정의한다.
+
+마지막으로 `getServletFilters`메소드에서는 파라미터 인코딩 형식을 지정한다.
+
+
